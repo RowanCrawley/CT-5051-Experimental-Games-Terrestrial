@@ -8,8 +8,10 @@ public class PlayerBasics : MonoBehaviour{
     private float charge;
     public float temp, jumpPower, chargeMax, strafeAmount;
     public Vector2 gravity;
-    bool rightJump, leftJump, jumping;
+    bool rightJump, leftJump, jumping, DBCollision;
     Rigidbody2D body;
+    public int currZoom = 10;
+    GameObject platform;
 
     private void Start() {
         Physics2D.gravity = gravity;
@@ -71,5 +73,32 @@ public class PlayerBasics : MonoBehaviour{
             jumpPower = temp;
         }
         charge = 1;
+    }
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("dropBox")){
+            DBCollision = true;
+            platform = collision.gameObject;
+        }
+    }private void OnCollisionExit2D(Collision2D collision) {
+        if (collision.transform.CompareTag("dropBox")){
+            DBCollision = false;
+        }
+    }
+    public void Drop(InputAction.CallbackContext callback) {  
+        if (callback.started) {
+            if (DBCollision) {
+                platform.gameObject.SetActive(false);
+                Debug.Log("start");
+                Wait(2);
+                Debug.Log("end");
+                platform.gameObject.SetActive(true);
+                platform = null;
+            }
+        } 
+    }
+    public IEnumerable Wait(int t) {
+        Debug.Log(Time.time);
+        yield return new WaitForSeconds(t);
+        Debug.Log(Time.time);
     }
 }
