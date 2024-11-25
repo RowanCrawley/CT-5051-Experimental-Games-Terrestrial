@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class ResetPlayer : MonoBehaviour{
     public Vector2 givenPos;
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if(collision.transform.CompareTag("DeathBox")) {
+    private void OnTriggerEnter2D(Collider2D collision) {
+        if(collision.CompareTag("Player")) {
             collision.transform.position = givenPos;
             Debug.Log("MovedPlayer");
         }
