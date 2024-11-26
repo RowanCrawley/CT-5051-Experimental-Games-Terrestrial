@@ -12,7 +12,6 @@ public class PlayerBasics : MonoBehaviour{
     Rigidbody2D body;
     public int currZoom = 10;
     GameObject platform;
-
     private void Start() {
         Physics2D.gravity = gravity;
         body = GetComponent<Rigidbody2D>();
@@ -87,18 +86,15 @@ public class PlayerBasics : MonoBehaviour{
     public void Drop(InputAction.CallbackContext callback) {  
         if (callback.started) {
             if (DBCollision) {
-                platform.gameObject.SetActive(false);
-                Debug.Log("start");
-                Wait(2);
-                Debug.Log("end");
-                platform.gameObject.SetActive(true);
-                platform = null;
+                platform.gameObject.GetComponent<Collider2D>().enabled = false;
+                StartCoroutine(Wait(1.0f));
+                
             }
         } 
     }
-    public IEnumerable Wait(int t) {
-        Debug.Log(Time.time);
+    public IEnumerator Wait(float t) {
         yield return new WaitForSeconds(t);
-        Debug.Log(Time.time);
+        platform.gameObject.GetComponent<Collider2D>().enabled = true;
+        platform = null;
     }
 }
