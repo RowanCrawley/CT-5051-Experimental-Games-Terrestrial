@@ -2,23 +2,33 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.Cinemachine;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
-public class PlayerBasics : MonoBehaviour{
+public class PlayerBasics : MonoBehaviour {
     private float charge;
     public float temp, jumpPower, chargeMax, strafeAmount;
     public Vector2 gravity;
-    bool rightJump, leftJump, jumping, DBCollision;
+    bool rightJump, leftJump, jumping = false, DBCollision;
     Rigidbody2D body;
     public int currZoom = 10;
     GameObject platform;
+    public Slider chargeBar;
     private void Start() {
         Physics2D.gravity = gravity;
         body = GetComponent<Rigidbody2D>();
     }
     private void FixedUpdate() {
         if (jumping) {
-            charge += Time.deltaTime * 5;
+            if (charge > chargeMax) {
+                charge = chargeMax;
+                chargeBar.value = chargeMax;
+            }
+            else {
+                chargeBar.value += Time.deltaTime * 5;
+                charge += Time.deltaTime * 5;
+            }
         }
         if(leftJump) {
             if (body.velocity.y > 0) {
@@ -52,10 +62,6 @@ public class PlayerBasics : MonoBehaviour{
             jumping = true;
         }
         if (callback.canceled) {
-            Debug.Log(charge);
-            if (charge > chargeMax) {
-                charge = chargeMax;
-            }
             temp = jumpPower;
             jumpPower *= charge;
             if (GetComponent<Rigidbody2D>().velocity == Vector2.zero) {
@@ -70,8 +76,10 @@ public class PlayerBasics : MonoBehaviour{
                 }
             }
             jumpPower = temp;
+            charge = 1;
+            jumping = false;
+            chargeBar.value = 1;
         }
-        charge = 1;
     }
     private void OnCollisionEnter2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("dropBox")){
@@ -88,7 +96,6 @@ public class PlayerBasics : MonoBehaviour{
             if (DBCollision) {
                 platform.gameObject.GetComponent<Collider2D>().enabled = false;
                 StartCoroutine(Wait(1.0f));
-                
             }
         } 
     }
