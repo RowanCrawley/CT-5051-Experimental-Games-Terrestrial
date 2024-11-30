@@ -1,6 +1,6 @@
 using UnityEngine;
 using TMPro;
-
+//Created By Ethan 
 public class CollectableCounter : MonoBehaviour
 {
     public static CollectableCounter Instance;

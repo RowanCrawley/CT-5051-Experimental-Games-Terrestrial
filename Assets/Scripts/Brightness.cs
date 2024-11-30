@@ -1,8 +1,6 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+//Created By Ethan 
 public class Brightness : MonoBehaviour
 {
     public Image image;

@@ -1,8 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Data;
 using UnityEngine;
-
+//Created By Ethan 
 public class PauseMenu : MonoBehaviour
 {
     public GameObject Canvas;
@@ -11,8 +8,7 @@ public class PauseMenu : MonoBehaviour
     public void Start() {
         Canvas.SetActive(false);
     }
-    private void Update()
-    {
+    private void Update() {
         if (Input.GetKeyDown(KeyCode.Escape)) {
             if (Paused == true) {
                 Canvas.SetActive(false);

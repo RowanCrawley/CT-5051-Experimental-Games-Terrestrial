@@ -1,6 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
-
+//Created By Ethan 
 public class UIController : MonoBehaviour
 {
     public void BrightnessUpdate(Slider slider)  {

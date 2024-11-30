@@ -1,11 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.SearchService;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
-
+//Created By Ethan 
 public class MainMenu : MonoBehaviour
 {
     public TMP_Dropdown resolutionDropdown;

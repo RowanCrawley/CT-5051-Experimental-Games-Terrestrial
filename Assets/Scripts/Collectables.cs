@@ -1,5 +1,5 @@
 using UnityEngine;
-
+//Created By Ethan 
 public class Collectables : MonoBehaviour
 {
     public int value;
