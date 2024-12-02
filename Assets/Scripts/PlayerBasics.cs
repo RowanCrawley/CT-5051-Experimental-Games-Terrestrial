@@ -1,11 +1,10 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.Cinemachine;
 using UnityEngine;
-using UnityEngine.Animations;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
+//Created by Rowan
+//Player movement and basic interactions
 public class PlayerBasics : MonoBehaviour {
     private float charge;
     public float temp, jumpPower, chargeMax, strafeAmount;
