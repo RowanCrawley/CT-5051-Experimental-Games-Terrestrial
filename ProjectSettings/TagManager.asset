@@ -6,6 +6,7 @@ TagManager:
   tags:
   - dropBox
   - Collectable
+  - wall
   layers:
   - Default
   - TransparentFX
