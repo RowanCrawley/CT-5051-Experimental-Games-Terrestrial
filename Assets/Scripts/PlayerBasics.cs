@@ -6,10 +6,10 @@ using UnityEngine.UI;
 //Created by Rowan
 //Player movement and basic interactions with platforms
 public class PlayerBasics : MonoBehaviour {
-    private float charge;
+    public float charge;
     public float temp, jumpPower, chargeMax, strafeAmount;
     public Vector2 gravity;
-    bool interacting, dropping, rightJump, leftJump, jumping = false;
+    bool interacting, dropping, rightJump, leftJump, jumping = false, DBCollided;
     Rigidbody2D body;
     Vector2 startGravity;
     public int currZoom = 10,chargeSpd = 5;
@@ -20,7 +20,7 @@ public class PlayerBasics : MonoBehaviour {
         body = GetComponent<Rigidbody2D>();
         startGravity = gravity;
     }
-    private void FixedUpdate() {
+    private void Update() {
         if (jumping) {
             if (charge > chargeMax) {
                 charge = chargeMax;
@@ -66,6 +66,15 @@ public class PlayerBasics : MonoBehaviour {
             rightJump = false;
         }
     }
+    public void Drop(InputAction.CallbackContext callback) {
+        if (callback.started) {
+            platform.GetComponent<Collider2D>().enabled = false;
+            StartCoroutine(WaitEnable(platform, 0.5f));
+        } 
+        if (callback.canceled) {
+            dropping = false;
+        } 
+    }
     public void Jump(InputAction.CallbackContext callback) {
         if (callback.started) {
             jumping = true;
@@ -91,35 +100,30 @@ public class PlayerBasics : MonoBehaviour {
             chargeBar.value = 1;
         }
     }
-    private void OnTriggerEnter2D(Collider2D collision) {
-        if (collision.CompareTag("dropBox")) {
-            if(body.velocity.y > 0 || dropping) {
+    private void OnCollisionEnter2D(Collision2D collision) {
+        if (collision.gameObject.CompareTag("dropBox")) {
+            DBCollided = true;
+            platform = collision.gameObject;
+            if (body.velocity.y > 0 || dropping){
                 Debug.Log("disabled box");
                 collision.gameObject.GetComponent<Collider2D>().enabled = false;
                 StartCoroutine(WaitEnable(collision.gameObject, 1.0f));
             }
-        }
-    }
-    private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("wall")) {
-            if (interacting) {
-                body.velocity = new Vector2(0, 0);
-                Physics2D.gravity = new Vector2(0, 0);
-            }
-            
+
         }
     }
     private void OnCollisionStay2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("wall")) {
-            if (!interacting) {
+        if (collision.gameObject.CompareTag("wall")){
+            if (!interacting){
                 Physics2D.gravity = startGravity;
             }
-        }
-        if (collision.gameObject.CompareTag("dropBox")) {
-            if(dropping) {
-                collision.gameObject.GetComponent<Collider2D>().enabled = false;
-                StartCoroutine(WaitEnable(collision.gameObject, 1.0f));
+            if (interacting){
+                body.velocity = new Vector2(0, 0);
+                Physics2D.gravity = new Vector2(0, 0);
             }
+        }
+        if (collision.gameObject.CompareTag("dropBox")){
+            collision.gameObject.GetComponent<Collider2D>().enabled = false;
         }
     }
     private void OnCollisionExit2D(Collision2D collision) {
@@ -127,17 +131,14 @@ public class PlayerBasics : MonoBehaviour {
             Physics2D.gravity = startGravity;
             interacting = false;
         }
-    }
-    public void Drop(InputAction.CallbackContext callback) {
-        if (callback.started) {
-            dropping = true;
-        } 
-        if (callback.canceled) {
+        if (collision.gameObject.CompareTag("dropBox") && body.velocity.magnitude > 0){
+            DBCollided = false;
             dropping = false;
-        } 
+            collision.gameObject.GetComponent<Collider2D>().enabled = true;
+        }
     }
+    
     public IEnumerator WaitEnable(GameObject platform, float t) {
-        Debug.Log("waiting");
         yield return new WaitForSeconds(t);
         platform.gameObject.GetComponent<Collider2D>().enabled = true;
         platform = null;
