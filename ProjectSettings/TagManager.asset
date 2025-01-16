@@ -7,6 +7,7 @@ TagManager:
   - dropBox
   - Collectable
   - wall
+  - Enemies
   layers:
   - Default
   - TransparentFX
