@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 //Created by Ethan
 public class PlayerHealth : MonoBehaviour
@@ -24,8 +25,9 @@ public class PlayerHealth : MonoBehaviour
         if (currentHealth < 0) {
             currentHealth = 0; 
         }
+        if (currentHealth == 0) {
+            SceneManager.LoadSceneAsync(3);
+        }
         // damage control function so this will determine how much health to take from the player. 
     }
-
-    // add potential game over logic if the players health reaches 0 will probablky be useful :)
 }
