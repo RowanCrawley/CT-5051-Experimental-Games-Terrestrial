@@ -629,9 +629,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 201494177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1215519c723f76c4c8523e1fb901a493, type: 3}
+  m_Script: {fileID: 11500000, guid: 17ec54a768678b648be0e852d686e9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  givenPos: {x: 0, y: 0}
 --- !u!68 &201494181
 EdgeCollider2D:
   m_ObjectHideFlags: 0
