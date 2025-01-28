@@ -5,6 +5,6 @@ public class RespawnPlayer : MonoBehaviour
 {
     public void RespawnPlay()
     {
-        SceneManager.LoadSceneAsync(1);
+        SceneManager.LoadSceneAsync(4);
     }
 }

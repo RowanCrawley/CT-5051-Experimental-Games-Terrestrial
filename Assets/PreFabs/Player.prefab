@@ -368,7 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   charge: 0
   temp: 0
-  jumpPower: 4
+  jumpPower: 2
   chargeMax: 7
   strafeAmount: 0.5
   gravity: {x: 0, y: -30}
