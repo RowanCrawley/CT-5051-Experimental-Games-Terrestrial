@@ -6,10 +6,10 @@ using UnityEngine.UI;
 //Created by Rowan
 //Player movement and basic interactions with platforms
 public class PlayerBasics : MonoBehaviour {
-    public float charge;
-    public float temp, jumpPower, chargeMax, strafeAmount;
+    private float temp;
+    public float charge, jumpPower, chargeMax, strafeAmount;
     public Vector2 gravity;
-    bool interacting, dropping, rightJump, leftJump, jumping = false, DBCollided;
+    bool interacting, rightJump, leftJump, jumping = false;
     Rigidbody2D body;
     Vector2 startGravity;
     public int currZoom = 10,chargeSpd = 5;
@@ -66,15 +66,6 @@ public class PlayerBasics : MonoBehaviour {
             rightJump = false;
         }
     }
-    public void Drop(InputAction.CallbackContext callback) {
-        if (callback.started) {
-            platform.GetComponent<Collider2D>().enabled = false;
-            StartCoroutine(WaitEnable(platform, 0.5f));
-        } 
-        if (callback.canceled) {
-            dropping = false;
-        } 
-    }
     public void Jump(InputAction.CallbackContext callback) {
         if (callback.started) {
             jumping = true;
@@ -101,40 +92,16 @@ public class PlayerBasics : MonoBehaviour {
         }
     }
     private void OnCollisionEnter2D(Collision2D collision) {
-        if (collision.gameObject.CompareTag("dropBox")) {
-            DBCollided = true;
-            platform = collision.gameObject;
-            if (body.velocity.y > 0 || dropping){
-                Debug.Log("disabled box");
-                collision.gameObject.GetComponent<Collider2D>().enabled = false;
-                StartCoroutine(WaitEnable(collision.gameObject, 1.0f));
-            }
-
-        }
-    }
-    private void OnCollisionStay2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("wall")){
-            if (!interacting){
-                Physics2D.gravity = startGravity;
-            }
             if (interacting){
                 body.velocity = new Vector2(0, 0);
                 Physics2D.gravity = new Vector2(0, 0);
             }
         }
-        if (collision.gameObject.CompareTag("dropBox")){
-            collision.gameObject.GetComponent<Collider2D>().enabled = false;
-        }
     }
     private void OnCollisionExit2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("wall")) {
             Physics2D.gravity = startGravity;
-            interacting = false;
-        }
-        if (collision.gameObject.CompareTag("dropBox") && body.velocity.magnitude > 0){
-            DBCollided = false;
-            dropping = false;
-            collision.gameObject.GetComponent<Collider2D>().enabled = true;
         }
     }
     
