@@ -1646,10 +1646,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
-      propertyPath: chargeBar
-      value: 
-      objectReference: {fileID: 215433822}
-    - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: chargeMax
       value: 12
       objectReference: {fileID: 0}
