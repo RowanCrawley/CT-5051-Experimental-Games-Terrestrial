@@ -8,6 +8,7 @@ TagManager:
   - Collectable
   - wall
   - Enemies
+  - HealthPack
   layers:
   - Default
   - TransparentFX

@@ -9,7 +9,7 @@ public class PlayerHealth : MonoBehaviour
     public float currentHealth = 100f;
     public float maxHealth = 100f;
     private bool isDamaged = false;   
-    // Setting up the correct Variables and using an image to display the players Health. 
+
     void Start() {
         healthHeart.fillAmount = currentHealth / maxHealth;
         // making sure when the game starts that the player is linked up to the image so it knows how to take damage and from what object.
@@ -19,11 +19,15 @@ public class PlayerHealth : MonoBehaviour
             DamageTaken(25f); 
             isDamaged = true;
         }// anything with the tag enemies on it will take 25 health away from the player. 
+        else if (collision.gameObject.CompareTag("HealthPack")) {
+            HealthGained(25f);
+            Destroy(collision.gameObject);
+        } // will destroy object after collecting health 
+        /// need to add check if pl;ayer can pick up as will just destroy if player is on full health. 
     }
     private void OnCollisionExit2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Enemies")) {
-            isDamaged = false;  //I have added in a boolean that will determine if the player is in the collider if it is true then damage the player if not then dont.
-                                  //I added this as it seems if they was still touching then the player would just die as it was always in the collider.
+            isDamaged = false;  //I have added in a boolean that will determine if the player is in the collider if it is true then damage the player if not then dont.                   
         }
     }
     public void DamageTaken(float damage) {
@@ -37,5 +41,11 @@ public class PlayerHealth : MonoBehaviour
         healthHeart.fillAmount = currentHealth / maxHealth;
         // damage control function so this will determine how much health to take from the player and when the players health reaches 0 to enter respawn scene. 
     }
-    // i need to do this with multiple circles not just 1 :(.
+    public void HealthGained(float health) {
+        currentHealth += health;
+        if (currentHealth > maxHealth) {
+            currentHealth = maxHealth;
+        }
+        healthHeart.fillAmount = currentHealth / maxHealth;
+    } // just did damage taken but in reverse and anything with a tag of HealthPack will increase the players health. 
 }
