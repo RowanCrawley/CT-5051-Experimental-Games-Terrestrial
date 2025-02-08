@@ -1776,6 +1776,10 @@ PrefabInstance:
       value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 5972078679483522947, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: healthHeart
+      value: 
+      objectReference: {fileID: 2145876334}
+    - target: {fileID: 5972078679483522947, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: healthSlider
       value: 
       objectReference: {fileID: 0}
