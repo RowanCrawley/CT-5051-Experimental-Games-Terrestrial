@@ -4,23 +4,40 @@ using UnityEngine.SceneManagement;
 public class PauseMenu : MonoBehaviour
 {
     public GameObject Canvas;
-    bool Paused = false;   
+    bool Paused = false;
 
-    public void Start() {
+    public void Start()
+    {
         Canvas.SetActive(false);
     }
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
-            if (Paused == true) {
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (Paused == true)
+            {
                 Canvas.SetActive(false);
                 Time.timeScale = 1.0f;
                 Paused = false;
             }
-            else {
+            else
+            {
                 Canvas.SetActive(true);
                 Time.timeScale = 0.0f;
                 Paused = true;
             }
         }
+    }
+    public void Resume()
+    {
+        if (Paused == true)
+        {
+            Canvas.SetActive(false);
+            Time.timeScale = 1.0f;
+        }
+    }
+    public void Return()
+    {
+        SceneManager.LoadScene(0);
     }
 }
