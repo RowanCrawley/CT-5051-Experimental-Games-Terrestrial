@@ -376,7 +376,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SecondsToWait: 5
-  SceneName: TestLevel
   SpeedProgress: 0.197
 --- !u!114 &783500268
 MonoBehaviour:
@@ -417,7 +416,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 1834169571}
   m_HandleRect: {fileID: 0}

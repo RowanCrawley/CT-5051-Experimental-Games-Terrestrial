@@ -12,10 +12,11 @@ public class LoadingScreen : MonoBehaviour
 
     private void Start() {
         IncrementProgress(1f);
+        Cursor.visible = false; // disables mouse cursor for specific scene. 
     }
     private void Awake() {
         slider = gameObject.GetComponent<Slider>();
-      
+        ResetBar();
     }
     public void IncrementProgress(float newprogress) {
        targetProgress = slider.value + newprogress;
@@ -25,10 +26,16 @@ public class LoadingScreen : MonoBehaviour
         timeElapsed += Time.deltaTime;
 
         if (timeElapsed > SecondsToWait) {
-            SceneManager.LoadSceneAsync(1);
+            SceneManager.LoadScene(1);
         }
         if (slider.value < targetProgress) {
             slider.value += SpeedProgress * Time.deltaTime;
         }
+    }
+    private void ResetBar()
+    {
+        slider.value = 0f;
+        targetProgress = 0f;
+        timeElapsed = 0f;  
     }
 }
