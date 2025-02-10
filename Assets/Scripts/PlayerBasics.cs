@@ -4,6 +4,9 @@ using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using WiimoteApi;
 
+
+
+
 //Created by Rowan
 //Player movement and basic interactions with platforms
 public class PlayerBasics : MonoBehaviour
@@ -19,6 +22,11 @@ public class PlayerBasics : MonoBehaviour
     public int currZoom = 10, chargeSpd = 5;
     public Slider chargeBar;
     Wiimote mote;
+    LineRenderer line;
+ 
+
+
+    Vector3[] vertices = new Vector3[10];
     private void Start()
     {
         chargeBar = GameObject.Find("ChargeBar").GetComponent<Slider>();
@@ -56,6 +64,15 @@ public class PlayerBasics : MonoBehaviour
         }
             
     }
+    //void DrawLine(float force){
+    //    float x = GetComponent<Transform>().position.magnitude;
+    //    foreach (Vector3 vertex in vertices)
+    //    {
+    //        vertex = -(force * x) - (x*x);
+    //    }
+    //    line.SetPositions();
+    //    //drawline -x(x+force);
+    //}
     //interaction button detection
     public void Interact(InputAction.CallbackContext callback)
     {
@@ -78,11 +95,10 @@ public class PlayerBasics : MonoBehaviour
     {
         if (callback.started){jumping = true;}
         if (callback.canceled){
-
             temp = jumpPower;
             jumpPower *= charge;
-            if (GetComponent<Rigidbody2D>().velocity.magnitude == 0)
-            {
+            //DrawLine(jumpPower);
+            if (GetComponent<Rigidbody2D>().velocity.magnitude == 0){
                 if (rightJump == true)
                 {
                     body.velocity = new Vector2(jumpPower / 2, jumpPower);
