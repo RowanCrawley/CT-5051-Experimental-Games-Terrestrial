@@ -54,6 +54,7 @@ public class PlayerBasics : MonoBehaviour
                 body.AddForce(new Vector2(strafeAmount, 0));
             }
         }
+            
     }
     //interaction button detection
     public void Interact(InputAction.CallbackContext callback)
@@ -80,7 +81,7 @@ public class PlayerBasics : MonoBehaviour
 
             temp = jumpPower;
             jumpPower *= charge;
-            if (GetComponent<Rigidbody2D>().velocity.magnitude <= 2)
+            if (GetComponent<Rigidbody2D>().velocity.magnitude == 0)
             {
                 if (rightJump == true)
                 {
