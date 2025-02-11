@@ -5203,6 +5203,14 @@ PrefabInstance:
       propertyPath: Canvas
       value: 
       objectReference: {fileID: 697685781}
+    - target: {fileID: 4692643705571242559, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: PauseCanvas
+      value: 
+      objectReference: {fileID: 697685781}
+    - target: {fileID: 4692643705571242559, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: OptionsCanvas
+      value: 
+      objectReference: {fileID: 645181608}
     - target: {fileID: 4809837985925114802, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_Name
       value: Player
