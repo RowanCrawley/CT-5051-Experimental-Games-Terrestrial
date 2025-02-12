@@ -19,13 +19,17 @@ public class PlayerHealth : MonoBehaviour
             DamageTaken(25f); 
             isDamaged = true;
         }// anything with the tag enemies on it will take 25 health away from the player. 
-        else if (collision.gameObject.CompareTag("HealthPack")) {
-            HealthGained(25f);
-            Destroy(collision.gameObject);
-        } // will destroy object after collecting health 
-        /// need to add check if pl;ayer can pick up as will just destroy if player is on full health. 
     }
-    private void OnCollisionExit2D(Collision2D collision) {
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if(collision.gameObject.CompareTag("HealthPack")) {
+            if (currentHealth < maxHealth) {
+                HealthGained(25f);
+                Destroy(collision.gameObject);
+            }
+        } // i changed health pack to on trigger instead of collision so when the player is at 100 health they can just walk through the object instead of around it. 
+    }
+        private void OnCollisionExit2D(Collision2D collision) {
         if (collision.gameObject.CompareTag("Enemies")) {
             isDamaged = false;  //I have added in a boolean that will determine if the player is in the collider if it is true then damage the player if not then dont.                   
         }
@@ -42,7 +46,8 @@ public class PlayerHealth : MonoBehaviour
         // damage control function so this will determine how much health to take from the player and when the players health reaches 0 to enter respawn scene. 
     }
     public void HealthGained(float health) {
-        currentHealth += health;
+            currentHealth += health;
+        
         if (currentHealth > maxHealth) {
             currentHealth = maxHealth;
         }
