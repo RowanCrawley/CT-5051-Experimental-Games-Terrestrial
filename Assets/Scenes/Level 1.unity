@@ -2026,7 +2026,19 @@ MonoBehaviour:
   m_Value: 1
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2013516586}
+        m_TargetAssemblyTypeName: PlayerBasics, Assembly-CSharp
+        m_MethodName: valChange
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &1754023526
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2390,6 +2402,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1902690500}
   m_CullTransparentMesh: 1
+--- !u!114 &2013516586 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+  m_PrefabInstance: {fileID: 1422761230}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d2a837bce987cc343b6905f38038bed9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &2080592634
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -30,6 +30,7 @@ public class PlayerBasics : MonoBehaviour
     private void Start()
     {
         chargeBar = GameObject.Find("ChargeBar").GetComponent<Slider>();
+        chargeBar.gameObject.SetActive(false);
         Physics2D.gravity = gravity;
         body = GetComponent<Rigidbody2D>();
         startGravity = gravity;
@@ -133,6 +134,15 @@ public class PlayerBasics : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("wall")){
             Physics2D.gravity = startGravity;
+        }
+    }
+
+    public void valChange() {
+        if (chargeBar.value == 1) {
+            chargeBar.gameObject.SetActive(false);
+        }
+        else {
+            chargeBar.gameObject.SetActive(true);
         }
     }
 
