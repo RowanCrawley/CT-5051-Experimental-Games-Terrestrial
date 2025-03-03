@@ -7,16 +7,16 @@ public class EnemyBehaviour : MonoBehaviour
 {
     [SerializeField] GameObject StartPos;
     [SerializeField] GameObject EndPos;
-    [SerializeField] GameObject GameObject;
+    [SerializeField] Rigidbody2D rb2D;
 
-    public float speed = 1.0f;
+    public float speed = 2;
 
     private void Start()
     {
-        Rigidbody rb = GetComponent<Rigidbody>();
+        Rigidbody2D rb2D = GetComponent<Rigidbody2D>();
         {
-            Vector2 vector2 = rb.velocity;
-            vector2 *= speed;
+            //transform.position = new Vector3(26,6,0);
+            //transform.Translate(Vector2.right * speed * Time.deltaTime);
         }
     }
     private void OnDrawGizmos() {
@@ -24,5 +24,4 @@ public class EnemyBehaviour : MonoBehaviour
         Gizmos.DrawWireSphere(StartPos.transform.position, 0.5f);
         Gizmos.DrawWireSphere(EndPos.transform.position, 0.5f);
     }
-
 }
