@@ -25,10 +25,19 @@ public class LoadingScreen : MonoBehaviour
         timeElapsed += Time.deltaTime;
 
         if (timeElapsed > SecondsToWait) {
+            ResetScene();
             SceneManager.LoadScene(4);
         }
         if (slider.value < targetProgress) {
             slider.value += SpeedProgress * Time.deltaTime;
         }
+    }
+    private void ResetScene()
+    {
+        slider.value = 0;
+        targetProgress = 0;
+        SpeedProgress = 0; 
+
+        //SceneManager.LoadSceneAsync(1); 
     }
 }
