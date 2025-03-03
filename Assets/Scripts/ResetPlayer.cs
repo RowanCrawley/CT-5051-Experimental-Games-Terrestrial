@@ -14,5 +14,9 @@ public class ResetPlayer : MonoBehaviour
             collision.transform.position = givenPos;
             Debug.Log("MovedPlayer");
         }
+        if (collision.CompareTag("Enemies")) // Edited by Ethan 
+        {
+            Destroy(collision.gameObject);
+        }
     }
 }
