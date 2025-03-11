@@ -23,25 +23,32 @@ public class PlayerBasics : MonoBehaviour
     public Slider chargeBar;
     Wiimote mote;
     LineRenderer line;
- 
-
-
     Vector3[] vertices = new Vector3[10];
-    private void Start()
-    {
+    private void Start(){
         chargeBar = GameObject.Find("ChargeBar").GetComponent<Slider>();
         chargeBar.gameObject.SetActive(false);
         Physics2D.gravity = gravity;
         body = GetComponent<Rigidbody2D>();
         startGravity = gravity;
+
         WiimoteManager.FindWiimotes();
         if (WiimoteManager.Wiimotes != null) {
             mote = WiimoteManager.Wiimotes[0];
+            mote.SendDataReportMode(InputDataType.REPORT_BUTTONS_ACCEL_EXT16);
+            mote.Accel.CalibrateAccel(AccelCalibrationStep.A_BUTTON_UP);
             mote.SendPlayerLED(true,false,false,false);//lights up first light on controller
+            Debug.Log("Player 1 connected");
         }
-        
     }
     private void Update(){
+        if (mote.Button.a) {
+            Debug.Log("a pressed");
+        }
+
+        if (mote.Button.home) {
+            mote.Accel.CalibrateAccel(AccelCalibrationStep.A_BUTTON_UP);
+            Debug.Log("Recalibrated");
+        }
         if (jumping){
             if (charge > chargeMax){
                 charge = chargeMax;
@@ -65,6 +72,7 @@ public class PlayerBasics : MonoBehaviour
         }
             
     }
+
     //void DrawLine(float force){
     //    float x = GetComponent<Transform>().position.magnitude;
     //    foreach (Vector3 vertex in vertices)
@@ -74,6 +82,8 @@ public class PlayerBasics : MonoBehaviour
     //    line.SetPositions();
     //    //drawline -x(x+force);
     //}
+
+
     //interaction button detection
     public void Interact(InputAction.CallbackContext callback)
     {
