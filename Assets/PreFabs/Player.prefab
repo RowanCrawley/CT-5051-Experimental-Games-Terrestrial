@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1895827339858997499}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -5.86, y: 2.3600001, z: -1}
+  m_LocalPosition: {x: -3.96, y: 1.41, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -351,9 +351,9 @@ Rigidbody2D:
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &3678299081579676115
 MonoBehaviour:
@@ -372,6 +372,7 @@ MonoBehaviour:
   chargeMax: 7
   strafeAmount: 0.5
   gravity: {x: 0, y: -30}
+  jumping: 0
   currZoom: 10
   chargeSpd: 10
   chargeBar: {fileID: 0}
@@ -501,7 +502,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 463c14e191772e04d9fec9b6ba7e6936, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Canvas: {fileID: 0}
+  PauseCanvas: {fileID: 0}
+  OptionsCanvas: {fileID: 0}
 --- !u!58 &7215747274804551076
 CircleCollider2D:
   m_ObjectHideFlags: 0

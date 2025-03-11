@@ -28,7 +28,7 @@ public class EnemyBehaviour : MonoBehaviour
             // is below the threshhold which is 0.1 essesntially checks if we are close enough to change direction.
         }
         Vector2 targetDirection = (targetPos - currentPos).normalized;
-        rb.MovePosition(currentPos + targetDirection * speed * Time.deltaTime); // moves the object towards desired location.
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime); // moves the object towards desired location altered slightly as this was sticking the player and enemy so decided to change the way they moved. 
     }
 }
 
