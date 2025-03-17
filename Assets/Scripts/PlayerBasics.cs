@@ -12,10 +12,10 @@ using WiimoteApi;
 public class PlayerBasics : MonoBehaviour
 {
     //generic vars for jumping
-    private float temp;
+    float temp, moteX, moteY;
     public float charge, jumpPower, chargeMax, strafeAmount;
     public Vector2 gravity;
-    bool interacting, rightJump, leftJump;
+    bool interacting, rightJump, leftJump, moteActive;
     public bool jumping = false;
     Rigidbody2D body;
     Vector2 startGravity;
@@ -37,7 +37,9 @@ public class PlayerBasics : MonoBehaviour
             mote.SendDataReportMode(InputDataType.REPORT_BUTTONS_ACCEL_EXT16);
             mote.Accel.CalibrateAccel(AccelCalibrationStep.A_BUTTON_UP);
             mote.SendPlayerLED(true,false,false,false);//lights up first light on controller
+            moteActive = false;
             Debug.Log("Player 1 connected");
+            
         }
     }
     private void FixedUpdate() {
@@ -47,36 +49,80 @@ public class PlayerBasics : MonoBehaviour
         }
     }
     private void Update(){
-        //if (mote.Button.one) {jumping = true;}
-        //else {jumping = false;}
+        //actives mote for play
+        if (mote.Button.home) {
+            moteActive = true;
+        }
 
-        
+        if (moteActive == true) {
+            moteX = mote.Accel.GetCalibratedAccelData()[0] - 0.2f;
+            moteY = -mote.Accel.GetCalibratedAccelData()[1] + 0.3f;
+            
 
-        if (mote.Button.one) {
-            if (charge > chargeMax){
+            //if (moteX > -0.3f && moteX < 0.3f) {
+            //    moteX = 0;
+            //}
+            //if (moteY > -0.3f && moteY < 0.3f) {
+            //    moteY = 0;
+            //}
+            //Debug.Log(moteX);
+            //Debug.Log(moteY);
+
+            if(moteX > 0.3f) {rightJump = true;}
+            else{rightJump = false;}
+
+            if(moteX < -0.3f) {leftJump = true;}
+            else{leftJump = false;}
+            
+            if(moteY > 0.5) {interacting = true;}
+            else {interacting = false;}
+
+            if (mote.Button.one) {
+                if (charge > chargeMax){
+                    charge = chargeMax;
+                    chargeBar.value = chargeMax;
+
+                }
+                else{
+                    chargeBar.value += Time.deltaTime * chargeSpd;
+                    charge += Time.deltaTime * chargeSpd;
+                }
+            }
+            else {
+                Jump();
+            }
+        }
+        if (jumping) {
+            if (charge > chargeMax) {
                 charge = chargeMax;
                 chargeBar.value = chargeMax;
                 
+
             }
-            else{
+            else {
                 chargeBar.value += Time.deltaTime * chargeSpd;
                 charge += Time.deltaTime * chargeSpd;
+                Debug.Log("jumping?");
             }
         }
-        else {Jump();}
+
+
 
         if (leftJump){
             if (body.velocity.y > 0){
                 body.AddForce(new Vector2(-strafeAmount, 0));
             }
         }
-
+        if (moteActive == true) {
+            if (body.velocity.y > 0){
+                body.AddForce(new Vector2(moteX, 0));
+            }
+        }
         if (rightJump){
             if (body.velocity.y > 0){
                 body.AddForce(new Vector2(strafeAmount, 0));
             }
-        }
-            
+        } 
     }
     void ResetJump() {
         jumpPower = temp;
@@ -111,12 +157,11 @@ public class PlayerBasics : MonoBehaviour
         if (callback.canceled){rightJump = false;}
     }
     //jumping
-    public void Jump(/*InputAction.CallbackContext callback*/){
-        //if (callback.started){jumping = true;}
-        //if (callback.canceled){
+    public void Jump(InputAction.CallbackContext callback){
+        if (callback.started){jumping = true;}
+        if (callback.canceled){
             temp = jumpPower;
             jumpPower *= charge;
-            //DrawLine(jumpPower);
             if (GetComponent<Rigidbody2D>().velocity.magnitude == 0){
                 if (rightJump == true){
                     body.velocity = new Vector2(jumpPower / 2, jumpPower);
@@ -129,7 +174,23 @@ public class PlayerBasics : MonoBehaviour
                 }
             }
         ResetJump();
-        //}
+        }
+    }
+    public void Jump(){
+            temp = jumpPower;
+            jumpPower *= charge;
+            if (GetComponent<Rigidbody2D>().velocity.magnitude == 0){
+                if (rightJump == true){
+                    body.velocity = new Vector2(jumpPower / 2, jumpPower);
+                }
+                else if (leftJump == true){
+                    body.velocity = new Vector2(-(jumpPower / 2), jumpPower);
+                }
+                else{
+                    body.velocity = new Vector2(0, jumpPower);
+                }
+            }
+        ResetJump();
     }
     private void OnCollisionEnter2D(Collision2D collision){
         if (collision.gameObject.CompareTag("wall")){
