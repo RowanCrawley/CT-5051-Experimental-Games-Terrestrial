@@ -32,6 +32,7 @@ public class PlayerBasics : MonoBehaviour
         startGravity = gravity;
 
         WiimoteManager.FindWiimotes();
+        mote = null;
         if (WiimoteManager.Wiimotes != null) {
             mote = WiimoteManager.Wiimotes[0];
             mote.SendDataReportMode(InputDataType.REPORT_BUTTONS_ACCEL_EXT16);
@@ -43,14 +44,14 @@ public class PlayerBasics : MonoBehaviour
         }
     }
     private void FixedUpdate() {
-        if (mote.Button.home) {
+        if (mote != null && mote.Button.home) {
             mote.Accel.CalibrateAccel(AccelCalibrationStep.A_BUTTON_UP);
             Debug.Log("Recalibrated");
         }
     }
     private void Update(){
         //actives mote for play
-        if (mote.Button.home) {
+        if (mote != null && mote.Button.home) {
             moteActive = true;
         }
 
@@ -102,7 +103,6 @@ public class PlayerBasics : MonoBehaviour
             else {
                 chargeBar.value += Time.deltaTime * chargeSpd;
                 charge += Time.deltaTime * chargeSpd;
-                Debug.Log("jumping?");
             }
         }
 
