@@ -584,7 +584,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17ec54a768678b648be0e852d686e9d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  givenPos: {x: 0, y: 0}
+  givenPos: {x: 0, y: 1}
 --- !u!4 &131773972
 Transform:
   m_ObjectHideFlags: 0
