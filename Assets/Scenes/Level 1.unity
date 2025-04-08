@@ -1441,7 +1441,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 809325717}
+  - {fileID: 1225846310}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &574505229
@@ -5168,11 +5168,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: -20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!4 &809325717 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 8265318501614063320, guid: 5daeb5f7e935dbe44a2114b8ab57fb2d, type: 3}
-  m_PrefabInstance: {fileID: 1225846309}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &862100754
 GameObject:
   m_ObjectHideFlags: 0
@@ -6751,13 +6746,17 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 559454170}
     m_Modifications:
+    - target: {fileID: 5896610108635408216, guid: 5daeb5f7e935dbe44a2114b8ab57fb2d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: -1930979408, guid: 2b58a03dd1b198f4db313c9714b640bd, type: 3}
     - target: {fileID: 8265318501614063320, guid: 5daeb5f7e935dbe44a2114b8ab57fb2d, type: 3}
       propertyPath: m_LocalPosition.x
       value: -28.34
       objectReference: {fileID: 0}
     - target: {fileID: 8265318501614063320, guid: 5daeb5f7e935dbe44a2114b8ab57fb2d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -4.65
+      value: -4.856
       objectReference: {fileID: 0}
     - target: {fileID: 8265318501614063320, guid: 5daeb5f7e935dbe44a2114b8ab57fb2d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -6795,11 +6794,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Collectable
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 2748089266759375505, guid: 5daeb5f7e935dbe44a2114b8ab57fb2d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5daeb5f7e935dbe44a2114b8ab57fb2d, type: 3}
+--- !u!4 &1225846310 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7441545755993360723, guid: 5daeb5f7e935dbe44a2114b8ab57fb2d, type: 3}
+  m_PrefabInstance: {fileID: 1225846309}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1232404745
 GameObject:
   m_ObjectHideFlags: 0
