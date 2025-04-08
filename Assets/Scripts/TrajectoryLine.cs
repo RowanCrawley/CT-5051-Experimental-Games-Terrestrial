@@ -9,13 +9,15 @@ public class TrajectoryLine : MonoBehaviour
     [SerializeField] PlayerBasics PlayerBasics; 
 
     public LineRenderer lineRenderer;
-    private Vector2 [] positions;
+    //private Vector2 [] positions;
+    public int lengthoflinerenderer = 20; 
 
     
     void Start() {
         if (lineRenderer == null) {
            lineRenderer = GetComponent<LineRenderer>();
         }
+        lineRenderer.positionCount = lengthoflinerenderer;
         
     }
 
