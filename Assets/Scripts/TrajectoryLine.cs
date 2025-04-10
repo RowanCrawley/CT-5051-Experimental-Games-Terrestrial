@@ -30,9 +30,22 @@ public class TrajectoryLine : MonoBehaviour
         lineRenderer.material = new Material(lineRenderer.material);
         lineRenderer.positionCount = simulationSteps;
     }
-    private void CalculatePath(Transform obj, float strafeAmount, float jumpCharge)
+    private void CalculatePath(Transform obj, float strafeAmount, float jumpCharge, bool leftJump, bool rightJump)
     {
-        Vector3 launchDirection = (obj.right + obj.up).normalized;
+        //Vector3 launchDirection = (obj.right + obj.up).normalized;
+        Vector3 launchDirection = Vector3.zero;
+        if (leftJump)
+        {
+            launchDirection = (-obj.right + obj.up).normalized;
+        }
+        else if (rightJump) 
+        {
+            launchDirection = (obj.right + obj.up).normalized;
+        }
+        else
+        {
+            launchDirection = obj.up;
+        }
         Vector3 launchVelocity = launchDirection * jumpCharge; 
 
         float gravity = Mathf.Abs(Physics.gravity.y);
@@ -54,14 +67,14 @@ public class TrajectoryLine : MonoBehaviour
     public void Update() {
         
         if (PlayerBasics.jumping) {
-            CalculatePath(gameobject.transform, 0, PlayerBasics.charge * 1);
+            CalculatePath(gameobject.transform, 0, PlayerBasics.charge * 1, true, false );
             if (PlayerBasics.rightJump)
             {
-                CalculatePath(gameobject.transform, PlayerBasics.strafeAmount, PlayerBasics.charge * 1);
+                CalculatePath(gameobject.transform, PlayerBasics.strafeAmount, PlayerBasics.charge * 1, false, true);
             }
             else if (PlayerBasics.leftJump)
             {
-                CalculatePath(gameobject.transform, -PlayerBasics.strafeAmount, PlayerBasics.charge * 1);
+                CalculatePath(gameobject.transform, -PlayerBasics.strafeAmount, PlayerBasics.charge * 1, true, false);
             }
             lineRenderer.SetPositions(positions.ToArray());
             Debug.Log("charging");
