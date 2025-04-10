@@ -22,7 +22,7 @@ public class PlayerBasics : MonoBehaviour
     public Slider chargeBar;
     Wiimote mote;
     LineRenderer line;
-    Vector3[] vertices = new Vector3[10];
+    Vector3[] vertices = new Vector3[10]; 
     private void Start()
     {
         chargeBar = GameObject.Find("ChargeBar").GetComponent<Slider>();
@@ -197,11 +197,14 @@ public class PlayerBasics : MonoBehaviour
             {
                 if (rightJump == true)
                 {
+                    // Edited by Ethan i have chgnaged it so the player rotates aswell as the transform position too. 
                     body.velocity = new Vector2(jumpPower / 2, jumpPower);
+                    gameObject.transform.localScale = new Vector3(1, 1, 1);
                 }
                 else if (leftJump == true)
                 {
                     body.velocity = new Vector2(-(jumpPower / 2), jumpPower);
+                    gameObject.transform.localScale = new Vector3(-1, 1, 1);
                 }
                 else
                 {
@@ -217,13 +220,17 @@ public class PlayerBasics : MonoBehaviour
         jumpPower *= charge;
         if (GetComponent<Rigidbody2D>().velocity.magnitude == 0)
         {
+            // Edited by Ethan i have added a scale flip so when the player jumps left the player will also look left too
+            // also reverts back when looking left. 
             if (rightJump == true)
             {
                 body.velocity = new Vector2(jumpPower / 2, jumpPower);
+                gameObject.transform.localScale = new Vector3(1, 1, 1);
             }
             else if (leftJump == true)
             {
                 body.velocity = new Vector2(-(jumpPower / 2), jumpPower);
+                gameObject.transform.localScale = new Vector3(-1, 1, 1);
             }
             else
             {

@@ -19,51 +19,49 @@ public class TrajectoryLine : MonoBehaviour
     public Vector3 v3Acceleration;
 
     private float airTime = 0f;
-    [SerializeField] private int simulationSteps = 30;
+    [SerializeField] private int simulationSteps = 10;
     public List<Vector3> positions = new List<Vector3>();
-
 
     public void Start() {
         if (lineRenderer == null) {
             lineRenderer = GetComponent<LineRenderer>();
         }
-        lineRenderer.widthMultiplier = 1.0f;
+        lineRenderer.widthMultiplier = 0.05f;
         lineRenderer.material = new Material(lineRenderer.material);
         lineRenderer.positionCount = simulationSteps;
     }
     private void CalculatePath(Transform obj, float strafeAmount, float jumpCharge)
     {
-        Vector3 launchAngle = (obj.right + obj.up) * jumpCharge;
-        v3InitialVelocity.y = jumpCharge * Mathf.Sin(launchAngle.y * Mathf.Deg2Rad);
-        airTime = 5 * (0 - v3InitialVelocity.y) / Physics.gravity.y;
+        Vector3 launchDirection = (obj.right + obj.up).normalized;
+        Vector3 launchVelocity = launchDirection * jumpCharge; 
 
-        Vector3 launchPos = obj.position;
-        positions[0] = launchPos;
+        float gravity = Mathf.Abs(Physics.gravity.y);
+        float airTime = (2 * launchVelocity.y) / gravity; 
 
-        for (int i = 0; i < simulationSteps; i++) 
+        Vector3 launchPosition = obj.position;
+        positions[0] = launchPosition;
+
+        for (int i = 0; i < simulationSteps; i++)
         {
-            float simTime = i / simulationSteps * airTime;
-            Vector3 displacement = v3InitialVelocity * simTime + 0.5f * Physics.gravity * simTime * simTime;
-            displacement += obj.right * simTime * jumpCharge;
-            Vector3 drawPoint = launchPos + displacement;
+            float simTime = (i / (float)simulationSteps) * airTime;
+
+            Vector3 displacement = launchVelocity * simTime + 0.5f * Physics.gravity * simTime * simTime;
+            Vector3 drawPoint = launchPosition + displacement;
             positions[i] = drawPoint;
-            //lineRenderer.SetPosition(i, drawPoint);
         }
-        //foreach (Vector3 pos in positions)
-        //{
-        //    lineRenderer.SetPositions(positions);
-        //}
+        lineRenderer.positionCount = simulationSteps;
     }
     public void Update() {
+        
         if (PlayerBasics.jumping) {
-            CalculatePath(gameobject.transform, 0, PlayerBasics.charge * 50);
+            CalculatePath(gameobject.transform, 0, PlayerBasics.charge * 1);
             if (PlayerBasics.rightJump)
             {
-                CalculatePath(gameobject.transform, PlayerBasics.strafeAmount, PlayerBasics.charge * 50);
+                CalculatePath(gameobject.transform, PlayerBasics.strafeAmount, PlayerBasics.charge * 1);
             }
             else if (PlayerBasics.leftJump)
             {
-                CalculatePath(gameobject.transform, -PlayerBasics.strafeAmount, PlayerBasics.charge * 50);
+                CalculatePath(gameobject.transform, -PlayerBasics.strafeAmount, PlayerBasics.charge * 1);
             }
             lineRenderer.SetPositions(positions.ToArray());
             Debug.Log("charging");

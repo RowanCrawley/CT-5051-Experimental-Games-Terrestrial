@@ -7462,7 +7462,7 @@ PrefabInstance:
       objectReference: {fileID: 548184067}
     - target: {fileID: 1247745777810396930, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.00000029802322
       objectReference: {fileID: 0}
     - target: {fileID: 1247745777810396930, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -7546,8 +7546,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: jumpPower
-      value: 4
+      value: 2.1
       objectReference: {fileID: 0}
+    - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: GameObject
+      value: 
+      objectReference: {fileID: 272536788}
     - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: strafeAmount
       value: 0.05
@@ -7595,6 +7599,10 @@ PrefabInstance:
     - target: {fileID: 8136071486906979367, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_BackGroundColor.r
       value: 0.1796328
+      objectReference: {fileID: 0}
+    - target: {fileID: 8891960273021363385, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.00000029802322
       objectReference: {fileID: 0}
     - target: {fileID: 8891960273021363385, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.y
@@ -9226,7 +9234,6 @@ LineRenderer:
   m_SortingOrder: 0
   m_Positions:
   - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 1
