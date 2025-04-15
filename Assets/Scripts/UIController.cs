@@ -3,7 +3,10 @@ using UnityEngine.UI;
 //Created By Ethan 
 public class UIController : MonoBehaviour
 {
+    private float minValue = 10;
+    private float maxValue = 100;
     public void BrightnessUpdate(Slider slider)  {
-        PlayerPrefs.SetFloat("Brightness", (101 - slider.value) / 100);
+        float clampedValue = Mathf.Clamp(slider.value, minValue, maxValue);
+        PlayerPrefs.SetFloat("Brightness", (101 - clampedValue) / 100);
     }
 }

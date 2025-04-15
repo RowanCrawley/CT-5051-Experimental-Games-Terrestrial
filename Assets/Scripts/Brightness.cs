@@ -12,5 +12,7 @@ public class Brightness : MonoBehaviour
         Color varColour = GetComponent<Image>().color;
         varColour.a = PlayerPrefs.GetFloat("Brightness");
         GetComponent<Image>().color = varColour;
+
+    
     }
 }
