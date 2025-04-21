@@ -7,26 +7,21 @@ public class PauseMenu : MonoBehaviour
     public GameObject OptionsCanvas;
     bool Paused = false; // Setting variables i had to add both canvases as i had an issue with one not toggeling off. 
 
-    public void Start()
-    {
+    public void Start() {
         PauseCanvas.SetActive(false);
         OptionsCanvas.SetActive(false);
         // Sets both to off when  the game starts. 
     }
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            if (Paused == true)
-            {
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            if (Paused == true) {
                 PauseCanvas.SetActive(false);
                 Time.timeScale = 1.0f;
                 Paused = false;
 
                 OptionsCanvas.SetActive(false);
             }
-            else
-            {
+            else {
                 PauseCanvas.SetActive(true);
                 Time.timeScale = 0.0f;
                 Paused = true;
@@ -34,10 +29,8 @@ public class PauseMenu : MonoBehaviour
         } 
         // when escape is pressed once it will set canvas to true when it is pressed again set to false. 
     }
-    public void Resume()
-    {
-        if (Paused == true)
-        {
+    public void Resume() {
+        if (Paused == true) {
             PauseCanvas.SetActive(false);
             Time.timeScale = 1.0f;
 
@@ -45,9 +38,9 @@ public class PauseMenu : MonoBehaviour
         }
         // Sets scale back to normal and hides canvas. 
     }
-    public void Return()
-    {
+    public void Return() {
         Time.timeScale = 1.0f;
         SceneManager.LoadScene(0);
-    }
+    } 
+    // sets the timescale back as before the loading scene wouldnt work as timescale was always set to 0. 
 }

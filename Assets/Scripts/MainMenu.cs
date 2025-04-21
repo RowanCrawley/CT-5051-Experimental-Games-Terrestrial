@@ -26,7 +26,9 @@ public class MainMenu : MonoBehaviour
         }
         resolutionDropdown.AddOptions(options);
         resolutionDropdown.value = currentResolutionIndex;
-        resolutionDropdown.RefreshShownValue();
+        resolutionDropdown.RefreshShownValue(); 
+
+         // i have used this in previous assignments but thought it would be a nice implementation to have in this game. 
     }
     public void SetResolution(int resolutionIndex) {
         Resolution resolution = resolutions[resolutionIndex];
@@ -45,7 +47,7 @@ public class MainMenu : MonoBehaviour
     }
     public void BrightnessUpdate(Slider slider) {
         PlayerPrefs.SetFloat("Brightness", (101 - slider.value) / 100);
-    }
+    } // updates the brightness value which is an image on the backgfroudn and yopu will change how dark that is.l 
 
     void Update() {
         if (Input.GetKey("escape")) {

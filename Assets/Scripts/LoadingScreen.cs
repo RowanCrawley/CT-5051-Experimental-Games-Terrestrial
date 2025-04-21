@@ -19,7 +19,7 @@ public class LoadingScreen : MonoBehaviour
     }
     public void IncrementProgress(float newprogress) {
        targetProgress = slider.value + newprogress;
-    }
+    }// gets the target progress and makes it = to the slider value. 
 
     private void Update() {
         timeElapsed += Time.deltaTime;
@@ -30,14 +30,14 @@ public class LoadingScreen : MonoBehaviour
         }
         if (slider.value < targetProgress) {
             slider.value += SpeedProgress * Time.deltaTime;
-        }
+        } 
+        // using delta time to control how long to wait the bar and the time are linked but its more of a placebo affect 
+        // makes the scene look more effective. 
     }
-    private void ResetScene()
-    {
+    private void ResetScene() {
         slider.value = 0;
         targetProgress = 0;
         SpeedProgress = 0; 
-
-        //SceneManager.LoadSceneAsync(1); 
+        // resets all progress when starting scene so can use loading bar more than once. 
     }
 }

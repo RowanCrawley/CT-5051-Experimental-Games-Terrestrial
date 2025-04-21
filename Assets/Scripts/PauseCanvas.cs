@@ -19,6 +19,8 @@ public class PauseCanvas : MonoBehaviour
 
             }
         }
-    }
+    } 
+    // simply throws up a canvas at the start and the player will need to press a button to start this was to 
+    // help with the confusion of pressing the wii home button before starting. 
 }
 

@@ -7,6 +7,8 @@ public class CollectableCounter : MonoBehaviour
     public TMP_Text collectableText;
     public int currentCollectable = 0;
 
+    // the instance is used in the collectable script so they can talk to eachother. 
+
     void Awake() {
         Instance = this;
     }
@@ -16,5 +18,6 @@ public class CollectableCounter : MonoBehaviour
     public void IncreaseCollectables(int count) {
         currentCollectable += count;
         collectableText.text = "Collectable:" + currentCollectable.ToString();
+        // gets the string and makes sure everytime the collectable is touched it will add to the total score. 
     }
 }

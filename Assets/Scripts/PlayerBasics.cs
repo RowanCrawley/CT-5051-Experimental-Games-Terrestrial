@@ -125,26 +125,18 @@ public class PlayerBasics : MonoBehaviour
 
         // Edited by Ethan i had to change how the player is moved using velocity
         // instead of add force i changed to velocity to make trajectory line easier on Right / Left jump.
-        if (leftJump)
-        {
-            if (body.velocity.y > 0)
-            {
-                //body.AddForce(new Vector2(-strafeAmount, 0));
+        if (leftJump) {
+            if (body.velocity.y > 0) {
                 body.velocity += new Vector2(-strafeAmount, 0);
             }
         }
-        if (moteActive == true)
-        {
-            if (body.velocity.y > 0)
-            {
+        if (moteActive == true) {
+            if (body.velocity.y > 0) {
                 body.AddForce(new Vector2(moteX, 0));
             }
         }
-        if (rightJump)
-        {
-            if (body.velocity.y > 0)
-            {
-               // body.AddForce(new Vector2(strafeAmount, 0));
+        if (rightJump) {
+            if (body.velocity.y > 0) {
                 body.velocity += new Vector2(strafeAmount, 0);
             }
         }
@@ -193,47 +185,38 @@ public class PlayerBasics : MonoBehaviour
         {
             temp = jumpPower;
             jumpPower *= charge;
-            if (GetComponent<Rigidbody2D>().velocity.magnitude == 0)
-            {
-                if (rightJump == true)
-                {
-                    // Edited by Ethan i have chgnaged it so the player rotates aswell as the transform position too. 
+            if (GetComponent<Rigidbody2D>().velocity.magnitude == 0) {
+                if (rightJump == true) {
+                    // Edited by Ethan i have changed it so the player rotates aswell as the transform position too. 
                     body.velocity = new Vector2(jumpPower / 2, jumpPower);
                     gameObject.transform.localScale = new Vector3(1, 1, 1);
                 }
-                else if (leftJump == true)
-                {
+                else if (leftJump == true) {
                     body.velocity = new Vector2(-(jumpPower / 2), jumpPower);
                     gameObject.transform.localScale = new Vector3(-1, 1, 1);
                 }
-                else
-                {
+                else {
                     body.velocity = new Vector2(0, jumpPower);
                 }
             }
             ResetJump();
         }
     }
-    public void Jump()
-    {
+    public void Jump() {
         temp = jumpPower;
         jumpPower *= charge;
-        if (GetComponent<Rigidbody2D>().velocity.magnitude == 0)
-        {
+        if (GetComponent<Rigidbody2D>().velocity.magnitude == 0) {
             // Edited by Ethan i have added a scale flip so when the player jumps left the player will also look left too
             // also reverts back when looking left. 
-            if (rightJump == true)
-            {
+            if (rightJump == true) {
                 body.velocity = new Vector2(jumpPower / 2, jumpPower);
                 gameObject.transform.localScale = new Vector3(1, 1, 1);
             }
-            else if (leftJump == true)
-            {
+            else if (leftJump == true) {
                 body.velocity = new Vector2(-(jumpPower / 2), jumpPower);
                 gameObject.transform.localScale = new Vector3(-1, 1, 1);
             }
-            else
-            {
+            else {
                 body.velocity = new Vector2(0, jumpPower);
             }
         }
