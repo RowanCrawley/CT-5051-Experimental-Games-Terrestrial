@@ -18,6 +18,7 @@ public class TrajectoryLine : MonoBehaviour
         lineRenderer.widthMultiplier = 0.05f;
         lineRenderer.material = new Material(lineRenderer.material);
         lineRenderer.positionCount = simulationSteps;
+        
         // drawing the line renderer and adding how many points i want on it using simulation steps.  
     }
     private void CalculatePath(Transform obj, float strafeAmount, float jumpCharge, bool leftJump, bool rightJump) {
@@ -62,10 +63,15 @@ public class TrajectoryLine : MonoBehaviour
             else if (PlayerBasics.leftJump) {
                 CalculatePath(gameobject.transform, -PlayerBasics.strafeAmount, PlayerBasics.charge * 1, true, false);
             }
+            lineRenderer.enabled = true;
             lineRenderer.SetPositions(positions.ToArray());
             Debug.Log("charging"); 
             // checking every frame using player basics jumping method and basing it off the charge seein g if the player is
             //holding space to jump and this is checked every frame. 
+        }
+        else
+        {
+            lineRenderer.enabled = false; // added this as before the line would stay until you jumped again. 
         }
     }
 }
