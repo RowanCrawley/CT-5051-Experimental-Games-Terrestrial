@@ -20,10 +20,10 @@ public class PlayerBasics : MonoBehaviour
     Vector2 startGravity;
     public int currZoom = 10, chargeSpd = 5;
     public Slider chargeBar;
-    Wiimote mote;
+    public Wiimote mote;
     LineRenderer line;
     Vector3[] vertices = new Vector3[10]; 
-    private void Start()
+    private void Awake()
     {
         chargeBar = GameObject.Find("ChargeBar").GetComponent<Slider>();
         chargeBar.gameObject.SetActive(false);
@@ -55,6 +55,13 @@ public class PlayerBasics : MonoBehaviour
     }
     private void Update()
     {
+        if(body.velocity.y < 0)
+        {
+            GetComponent<Animator>().SetTrigger("Fall");
+        }else if (body.velocity.y == 0)
+        {
+            GetComponent<Animator>().SetTrigger("Idle");
+        }
         //actives mote for play
         if (mote != null && mote.Button.home)
         {
@@ -76,29 +83,30 @@ public class PlayerBasics : MonoBehaviour
             //Debug.Log(moteX);
             //Debug.Log(moteY);
 
-            if (moteX > 0.3f) { rightJump = true; }
+            if (moteY > 0.3f) { rightJump = true; }
             else { rightJump = false; }
 
-            if (moteX < -0.3f) { leftJump = true; }
+            if (moteY < -0.3f) { leftJump = true; }
             else { leftJump = false; }
 
-            if (moteY > 0.5) { interacting = true; }
+            if (moteX > 0.5) { interacting = true; }
             else { interacting = false; }
 
-            if (mote.Button.one)
+            if (mote.Button.a)
             {
                 if (charge > chargeMax)
                 {
                     charge = chargeMax;
                     chargeBar.value = chargeMax;
-
-
+                    jumping = false;
+                    
 
                 }
                 else
                 {
                     chargeBar.value += Time.deltaTime * chargeSpd;
                     charge += Time.deltaTime * chargeSpd;
+                    jumping = true;
                 }
             }
             else
@@ -108,11 +116,11 @@ public class PlayerBasics : MonoBehaviour
         }
         if (jumping)
         {
+            
             if (charge > chargeMax)
             {
                 charge = chargeMax;
                 chargeBar.value = chargeMax;
-
 
             }
             else
@@ -163,8 +171,13 @@ public class PlayerBasics : MonoBehaviour
     //interaction button detection
     public void Interact(InputAction.CallbackContext callback)
     {
-        if (callback.started) { interacting = true; }
-        if (callback.canceled) { interacting = false; }
+        if (callback.started) { 
+            interacting = true;
+            
+        }
+        if (callback.canceled) { 
+            interacting = false;
+        }
     }
     //horizontal move detection
     public void LeftMove(InputAction.CallbackContext callback)
@@ -183,6 +196,7 @@ public class PlayerBasics : MonoBehaviour
         if (callback.started) { jumping = true; }
         if (callback.canceled)
         {
+            GetComponent<Animator>().SetTrigger("Jump");
             temp = jumpPower;
             jumpPower *= charge;
             if (GetComponent<Rigidbody2D>().velocity.magnitude == 0) {
@@ -203,6 +217,7 @@ public class PlayerBasics : MonoBehaviour
         }
     }
     public void Jump() {
+        GetComponent<Animator>().SetTrigger("Jump");
         temp = jumpPower;
         jumpPower *= charge;
         if (GetComponent<Rigidbody2D>().velocity.magnitude == 0) {
@@ -228,6 +243,8 @@ public class PlayerBasics : MonoBehaviour
         {
             if (interacting)
             {
+                //GetComponent<Animator>().SetTrigger("Grabbing");
+                GetComponent<Animator>().Play("Blorpo_Grab");
                 body.velocity = new Vector2(0, 0);
                 Physics2D.gravity = new Vector2(0, 0);
             }
@@ -238,6 +255,7 @@ public class PlayerBasics : MonoBehaviour
         if (collision.gameObject.CompareTag("wall"))
         {
             Physics2D.gravity = startGravity;
+            GetComponent<Animator>().SetTrigger("StopGrabbing");
         }
     }
 
