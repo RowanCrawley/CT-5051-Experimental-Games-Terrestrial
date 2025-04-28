@@ -6,20 +6,31 @@ public class PauseCanvas : MonoBehaviour
     // created by Ethan
     public GameObject Canvas;
     bool paused = true;
-    GameObject player;
+    Wiimote mote;
 
     public void Start() {
         Canvas.SetActive(true);
         Time.timeScale = 0.0f;
-        player = GameObject.Find("Player");
+
+        mote = GameObject.Find("Player").GetComponent<PlayerBasics>().mote;
+
     }
     private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space) || player.GetComponent<PlayerBasics>().mote.Button.home) {
+        if (Input.GetKeyDown(KeyCode.Space)) {
             if (paused == true) {
                 Canvas.SetActive(false);
                 Time.timeScale = 1.0f;
                 paused = false;
 
+            }
+        }
+        if (mote != null) {
+            if (mote.Button.home) {
+                if (paused == true) {
+                    Canvas.SetActive(false);
+                    Time.timeScale = 1.0f;
+                    paused = false;
+                }
             }
         }
     } 

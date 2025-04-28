@@ -8,8 +8,7 @@ using WiimoteApi;
 
 //Created by Rowan
 //Player movement and basic interactions with platforms
-public class PlayerBasics : MonoBehaviour
-{
+public class PlayerBasics : MonoBehaviour{
     //generic vars for jumping
     float temp, moteX, moteY;
     public float charge, jumpPower, chargeMax, strafeAmount;
@@ -21,10 +20,11 @@ public class PlayerBasics : MonoBehaviour
     public int currZoom = 10, chargeSpd = 5;
     public Slider chargeBar;
     public Wiimote mote;
-    LineRenderer line;
-    Vector3[] vertices = new Vector3[10]; 
-    private void Awake()
-    {
+
+    float timer = 0;
+    public bool plusButtonPressed, DLeftButtonPressed, DRightButtonPressed, DUpButtonPressed, DDownButtonPressed = false;
+
+    private void Awake(){
         chargeBar = GameObject.Find("ChargeBar").GetComponent<Slider>();
         chargeBar.gameObject.SetActive(false);
         Physics2D.gravity = gravity;
@@ -38,50 +38,58 @@ public class PlayerBasics : MonoBehaviour
             if (WiimoteManager.Wiimotes.Count != 0){
                 mote = WiimoteManager.Wiimotes[0];
                 mote.SendDataReportMode(InputDataType.REPORT_BUTTONS_ACCEL_EXT16);
-                mote.Accel.CalibrateAccel(AccelCalibrationStep.A_BUTTON_UP);
+                mote.Accel.CalibrateAccel(AccelCalibrationStep.LEFT_SIDE_UP);//sets motion controls to act relative to the controller being held sideways
                 mote.SendPlayerLED(true, false, false, false);//lights up first light on controller
                 moteActive = false;
                 Debug.Log("Player 1 connected");
             }
         }
     }
-    private void FixedUpdate()
-    {
-        if (mote != null && mote.Button.home)
-        {
-            mote.Accel.CalibrateAccel(AccelCalibrationStep.A_BUTTON_UP);
-            Debug.Log("Recalibrated");
-        }
-    }
-    private void Update()
-    {
-        if(body.velocity.y < 0)
-        {
-            GetComponent<Animator>().SetTrigger("Fall");
-        }else if (body.velocity.y == 0)
-        {
-            GetComponent<Animator>().SetTrigger("Idle");
-        }
-        //actives mote for play
-        if (mote != null && mote.Button.home)
-        {
-            moteActive = true;
+
+   void OnButtonDown( bool buttonPresssed) {
+        if (buttonPresssed) {
+            timer += Time.deltaTime;
+            if (timer < 0.0035f) {
+                buttonPresssed = true;
+            }
+            else {
+                buttonPresssed = false;
+            }
         }
 
-        if (moteActive == true)
-        {
+        else {
+            timer = 0;
+            buttonPresssed = false;
+            
+        }
+    }
+
+    private void Update() {
+        if (body.velocity.y < 0) {
+            GetComponent<Animator>().SetTrigger("Fall");
+        }
+        else if (body.velocity.y == 0) {
+            GetComponent<Animator>().SetTrigger("Idle");
+        }
+        //activates mote for play if home button is pressed
+        if (mote != null && mote.Button.home) {
+            moteActive = true;
+        }
+            //actives mote for play
+
+        if (moteActive == true) {
+
+            //checks for wiimote button presses
+            OnButtonDown(plusButtonPressed);
+            OnButtonDown(DLeftButtonPressed);
+            OnButtonDown(DRightButtonPressed);
+            OnButtonDown(DUpButtonPressed);
+            OnButtonDown(DDownButtonPressed);
+
+            //--------------------------------------------
             moteX = mote.Accel.GetCalibratedAccelData()[0] - 0.2f;
             moteY = -mote.Accel.GetCalibratedAccelData()[1] + 0.3f;
 
-
-            //if (moteX > -0.3f && moteX < 0.3f) {
-            //    moteX = 0;
-            //}
-            //if (moteY > -0.3f && moteY < 0.3f) {
-            //    moteY = 0;
-            //}
-            //Debug.Log(moteX);
-            //Debug.Log(moteY);
 
             if (moteY > 0.3f) { rightJump = true; }
             else { rightJump = false; }
@@ -92,39 +100,33 @@ public class PlayerBasics : MonoBehaviour
             if (moteX > 0.5) { interacting = true; }
             else { interacting = false; }
 
-            if (mote.Button.a)
-            {
-                if (charge > chargeMax)
-                {
+            //--------------------------------------------
+
+            if (mote.Button.a) {
+                if (charge > chargeMax) {
                     charge = chargeMax;
                     chargeBar.value = chargeMax;
                     jumping = false;
-                    
+
 
                 }
-                else
-                {
+                else {
                     chargeBar.value += Time.deltaTime * chargeSpd;
                     charge += Time.deltaTime * chargeSpd;
                     jumping = true;
                 }
             }
-            else
-            {
+            else {
                 Jump();
             }
         }
-        if (jumping)
-        {
-            
-            if (charge > chargeMax)
-            {
+
+        if (jumping) {
+            if (charge > chargeMax) {
                 charge = chargeMax;
                 chargeBar.value = chargeMax;
-
             }
-            else
-            {
+            else {
                 chargeBar.value += Time.deltaTime * chargeSpd;
                 charge += Time.deltaTime * chargeSpd;
             }
@@ -133,51 +135,31 @@ public class PlayerBasics : MonoBehaviour
 
         // Edited by Ethan i had to change how the player is moved using velocity
         // instead of add force i changed to velocity to make trajectory line easier on Right / Left jump.
-        if (leftJump) {
-            if (body.velocity.y > 0) {
+        if (body.velocity.y > 0) {
+            if (leftJump) {
                 body.velocity += new Vector2(-strafeAmount, 0);
             }
-        }
-        if (moteActive == true) {
-            if (body.velocity.y > 0) {
-                body.AddForce(new Vector2(moteX, 0));
+            if (moteActive == true) {
+                body.AddForce(new Vector2(moteY, 0));
             }
-        }
-        if (rightJump) {
-            if (body.velocity.y > 0) {
+            if (rightJump) {
                 body.velocity += new Vector2(strafeAmount, 0);
             }
         }
     }
-    void ResetJump()
-    {
+
+    void ResetJump(){
         jumpPower = temp;
         charge = 0;
         jumping = false;
         chargeBar.value = 0;
     }
 
-    //void DrawLine(float force){
-    //    float x = GetComponent<Transform>().position.magnitude;
-    //    foreach (Vector3 vertex in vertices)
-    //    {
-    //        vertex = -(force * x) - (x*x);
-    //    }
-    //    line.SetPositions();
-    //    //drawline -x(x+force);
-    //}
-
 
     //interaction button detection
-    public void Interact(InputAction.CallbackContext callback)
-    {
-        if (callback.started) { 
-            interacting = true;
-            
-        }
-        if (callback.canceled) { 
-            interacting = false;
-        }
+    public void Interact(InputAction.CallbackContext callback){
+        if (callback.started) {interacting = true;}
+        if (callback.canceled) {interacting = false;}
     }
     //horizontal move detection
     public void LeftMove(InputAction.CallbackContext callback)
@@ -190,7 +172,10 @@ public class PlayerBasics : MonoBehaviour
         if (callback.started) { rightJump = true; }
         if (callback.canceled) { rightJump = false; }
     }
+
+
     //jumping
+    //keyboard
     public void Jump(InputAction.CallbackContext callback)
     {
         if (callback.started) { jumping = true; }
@@ -216,6 +201,7 @@ public class PlayerBasics : MonoBehaviour
             ResetJump();
         }
     }
+    //wimote
     public void Jump() {
         GetComponent<Animator>().SetTrigger("Jump");
         temp = jumpPower;
@@ -243,7 +229,6 @@ public class PlayerBasics : MonoBehaviour
         {
             if (interacting)
             {
-                //GetComponent<Animator>().SetTrigger("Grabbing");
                 GetComponent<Animator>().Play("Blorpo_Grab");
                 body.velocity = new Vector2(0, 0);
                 Physics2D.gravity = new Vector2(0, 0);
@@ -270,11 +255,4 @@ public class PlayerBasics : MonoBehaviour
             chargeBar.gameObject.SetActive(true);
         }
     }
-
-    /*public IEnumerator WaitEnable(GameObject platform, float t){//generic funtion that disables, then renables an object after a given time
-    
-        yield return new WaitForSeconds(t);
-        platform.gameObject.GetComponent<Collider2D>().enabled = true;
-        platform = null;
-    }*/
 }

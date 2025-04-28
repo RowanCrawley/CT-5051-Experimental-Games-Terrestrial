@@ -1,19 +1,22 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 //Created By Ethan 
+//Wii mote controls added by Rowan
 public class PauseMenu : MonoBehaviour
 {
     public GameObject PauseCanvas;
     public GameObject OptionsCanvas;
-    bool Paused = false; // Setting variables i had to add both canvases as i had an issue with one not toggeling off. 
+    bool Paused = false; // Setting variables i had to add both canvases as i had an issue with one not toggeling off.
 
     public void Start() {
         PauseCanvas.SetActive(false);
         OptionsCanvas.SetActive(false);
         // Sets both to off when  the game starts. 
     }
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Escape)) {
+
+
+    private void LateUpdate() {//Changed to late update so that playerbasics update happen first
+        if (Input.GetKeyDown(KeyCode.Escape) || GetComponent<PlayerBasics>().plusButtonPressed) {
             if (Paused == true) {
                 PauseCanvas.SetActive(false);
                 Time.timeScale = 1.0f;
