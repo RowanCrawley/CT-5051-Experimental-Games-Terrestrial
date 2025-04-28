@@ -499,6 +499,11 @@ MonoBehaviour:
   currZoom: 2
   chargeSpd: 12
   chargeBar: {fileID: 0}
+  plusButtonPressed: 0
+  DLeftButtonPressed: 0
+  DRightButtonPressed: 0
+  DUpButtonPressed: 0
+  DDownButtonPressed: 0
 --- !u!114 &1198943712042081647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -873,8 +878,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.04801332, y: 0.058659215}
-  m_Size: {x: 0.8639734, y: 1.4755306}
+  m_Offset: {x: 0, y: -0.15}
+  m_Size: {x: 0.6, y: 1}
   m_Direction: 0
 --- !u!95 &8001696113816288684
 Animator:
