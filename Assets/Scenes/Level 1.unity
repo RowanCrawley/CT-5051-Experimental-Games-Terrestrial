@@ -9873,8 +9873,11 @@ PrefabInstance:
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 469c7b172f9c7e74ba57e42bed47401f, type: 3}
 <<<<<<< HEAD
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 =======
+=======
+>>>>>>> parent of c38878b (level update)
 =======
 >>>>>>> parent of c38878b (level update)
 --- !u!1001 &8853293312226738316
@@ -9891,10 +9894,13 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5186205082568965080, guid: 0bb21960e24b5b64aad0ba8deedbfcd0, type: 3}
 <<<<<<< HEAD
+<<<<<<< HEAD
       propertyPath: m_LocalScale.x
       value: 2.3625
       objectReference: {fileID: 0}
     - target: {fileID: 5186205082568965080, guid: 0bb21960e24b5b64aad0ba8deedbfcd0, type: 3}
+=======
+>>>>>>> parent of c38878b (level update)
 =======
 >>>>>>> parent of c38878b (level update)
       propertyPath: m_LocalScale.y
@@ -9903,17 +9909,23 @@ PrefabInstance:
     - target: {fileID: 5186205082568965080, guid: 0bb21960e24b5b64aad0ba8deedbfcd0, type: 3}
       propertyPath: m_LocalPosition.x
 <<<<<<< HEAD
+<<<<<<< HEAD
       value: -12.24
       objectReference: {fileID: 0}
     - target: {fileID: 5186205082568965080, guid: 0bb21960e24b5b64aad0ba8deedbfcd0, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.53
 =======
+=======
+>>>>>>> parent of c38878b (level update)
       value: -11.23
       objectReference: {fileID: 0}
     - target: {fileID: 5186205082568965080, guid: 0bb21960e24b5b64aad0ba8deedbfcd0, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.48
+<<<<<<< HEAD
+>>>>>>> parent of c38878b (level update)
+=======
 >>>>>>> parent of c38878b (level update)
       objectReference: {fileID: 0}
     - target: {fileID: 5186205082568965080, guid: 0bb21960e24b5b64aad0ba8deedbfcd0, type: 3}
@@ -9959,7 +9971,10 @@ Transform:
   m_PrefabInstance: {fileID: 8853293312226738316}
   m_PrefabAsset: {fileID: 0}
 <<<<<<< HEAD
+<<<<<<< HEAD
 >>>>>>> Stashed changes
+=======
+>>>>>>> parent of c38878b (level update)
 =======
 >>>>>>> parent of c38878b (level update)
 --- !u!1660057539 &9223372036854775807
