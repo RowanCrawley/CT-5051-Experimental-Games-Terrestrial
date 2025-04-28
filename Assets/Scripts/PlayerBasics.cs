@@ -62,9 +62,12 @@ public class PlayerBasics : MonoBehaviour{
             buttonPresssed = false;
             
         }
-    }
+   }
 
-    private void Update() {
+    void Update() {
+        if (mote.Button.home) {
+            mote.Accel.CalibrateAccel(AccelCalibrationStep.LEFT_SIDE_UP);
+        }
         if (body.velocity.y < 0) {
             GetComponent<Animator>().SetTrigger("Fall");
         }
@@ -75,8 +78,6 @@ public class PlayerBasics : MonoBehaviour{
         if (mote != null && mote.Button.home) {
             moteActive = true;
         }
-            //actives mote for play
-
         if (moteActive == true) {
 
             //checks for wiimote button presses
