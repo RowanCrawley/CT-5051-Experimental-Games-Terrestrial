@@ -21,7 +21,10 @@ public class PauseMenu : MonoBehaviour
 
 
     private void LateUpdate() {//Changed to late update so that playerbasics update happen first
-        home = Script.mote.Button.home;
+        if (Script != null) {
+            home = Script.mote.Button.home;
+        }
+       
         if (Input.GetKeyDown(KeyCode.Escape) || Detection.Get("home",home)) {
             if (Paused == true) {
                 PauseCanvas.SetActive(false);

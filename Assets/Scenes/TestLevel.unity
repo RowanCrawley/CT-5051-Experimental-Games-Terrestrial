@@ -4344,7 +4344,6 @@ GameObject:
   - component: {fileID: 1958806982}
   - component: {fileID: 1958806981}
   - component: {fileID: 1958806980}
-  - component: {fileID: 1958806979}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -4352,18 +4351,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1958806979
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958806978}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fc5d16bda5091ae4f91a6906f0493585, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1958806980
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5260,11 +5247,20 @@ PrefabInstance:
       propertyPath: FollowOffset.y
       value: 1.75
       objectReference: {fileID: 0}
+    - target: {fileID: 8136071486906979367, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: orthographic size
+      value: 14.29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8891960273021363385, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8891960273021363385, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.75
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3624767154498496050, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 1430318638199693469, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}

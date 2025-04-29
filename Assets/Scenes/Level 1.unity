@@ -134,17 +134,25 @@ PrefabInstance:
       propertyPath: collectableText
       value: 
       objectReference: {fileID: 1574222053}
+    - target: {fileID: 1198943712042081647, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_PersistentCalls.m_Calls.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1198943712042081647, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: KeyBoardJump
+      objectReference: {fileID: 0}
     - target: {fileID: 1247745777810396930, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.00000024835256
+      value: -0.00000024835253
       objectReference: {fileID: 0}
     - target: {fileID: 1247745777810396930, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.4583334
+      value: 1.4583333
       objectReference: {fileID: 0}
     - target: {fileID: 1247745777810396930, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.8333333
+      value: -0.83333325
       objectReference: {fileID: 0}
     - target: {fileID: 1430318638199693469, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalScale.x
@@ -227,6 +235,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1943038528}
     - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: deadZone
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: chargeSpd
       value: 15
       objectReference: {fileID: 0}
@@ -239,8 +251,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: moteStrafe
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: strafeAmount
-      value: 0.07
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4692643705571242559, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: PauseCanvas
@@ -272,15 +288,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8891960273021363385, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.00000024835256
+      value: -0.00000024835253
       objectReference: {fileID: 0}
     - target: {fileID: 8891960273021363385, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.4583334
+      value: 1.4583333
       objectReference: {fileID: 0}
     - target: {fileID: 8891960273021363385, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -0.8333333
+      value: -0.83333325
       objectReference: {fileID: 0}
     - target: {fileID: 9190272576778730481, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: Loop

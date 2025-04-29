@@ -59,13 +59,17 @@ public class TrajectoryLine : MonoBehaviour
             CalculatePath(gameobject.transform, 0, PlayerBasics.charge * 1, true, false );
             if (PlayerBasics.rightJump) {
                 CalculatePath(gameobject.transform, PlayerBasics.strafeAmount, PlayerBasics.charge * 1, false, true);
+                lineRenderer.enabled = true;
+                lineRenderer.SetPositions(positions.ToArray());
             }
             else if (PlayerBasics.leftJump) {
                 CalculatePath(gameobject.transform, -PlayerBasics.strafeAmount, PlayerBasics.charge * 1, true, false);
+                lineRenderer.enabled = true;
+                lineRenderer.SetPositions(positions.ToArray());
             }
-            lineRenderer.enabled = true;
-            lineRenderer.SetPositions(positions.ToArray());
-            Debug.Log("charging"); 
+            else {
+                lineRenderer.enabled = false;
+            }
             // checking every frame using player basics jumping method and basing it off the charge seein g if the player is
             //holding space to jump and this is checked every frame. 
         }

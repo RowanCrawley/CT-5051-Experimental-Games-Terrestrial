@@ -9,7 +9,7 @@ using WiimoteApi;
 public class PlayerBasics : MonoBehaviour{
     //generic vars for jumping
     float temp, moteX, moteY;
-    public float charge, jumpPower, chargeMax, strafeAmount;
+    public float charge, jumpPower, chargeMax, strafeAmount, moteStrafe, deadZone;
     public Vector2 gravity;
     public bool interacting, rightJump, leftJump, moteActive;
     public bool jumping = false;
@@ -18,7 +18,7 @@ public class PlayerBasics : MonoBehaviour{
     public int currZoom = 10, chargeSpd = 5;
     public Slider chargeBar;
     public Wiimote mote;
-    bool minus, plus, home, one, dLeft,dRight,dUp,dDown = false;
+    bool minus, plus, one, dLeft,dRight,dUp,dDown = false;
     Detection Detection = new();
 
 
@@ -30,7 +30,6 @@ public class PlayerBasics : MonoBehaviour{
         startGravity = gravity;
 
         WiimoteManager.FindWiimotes();
-        mote = null;
         if (WiimoteManager.Wiimotes != null)
         { // Edited by Ethan added Wiimotes count to get rid of error message. 
             if (WiimoteManager.Wiimotes.Count != 0){
@@ -61,7 +60,6 @@ public class PlayerBasics : MonoBehaviour{
 
             plus = mote.Button.plus;
             minus = mote.Button.minus;
-            home = mote.Button.home;
             dLeft = mote.Button.d_left;
             dRight = mote.Button.d_right;
             dDown = mote.Button.d_down;
@@ -93,21 +91,13 @@ public class PlayerBasics : MonoBehaviour{
             }
 
             //--------------------------------------------
-            moteX = mote.Accel.GetCalibratedAccelData()[0] - 0.2f;
-            moteY = -mote.Accel.GetCalibratedAccelData()[1] + 0.3f;
-
-
-            if (moteY > 0.3f) { rightJump = true; }
-            else { rightJump = false; }
-
-            if (moteY < -0.3f) { leftJump = true; }
-            else { leftJump = false; }
-
-            if (moteX > 0.5) { interacting = true; }
-            else { interacting = false; }
+            //Finds the mote position
+            moteX = mote.Accel.GetCalibratedAccelData()[0] + 0.1f;
+            moteY = -mote.Accel.GetCalibratedAccelData()[1] + 0.85f;
+            Debug.Log(moteY);
 
             //--------------------------------------------
-
+            //for however long the button is pressed, add charge. when it is released - jump
             if (mote.Button.a) {
                 if (charge > chargeMax) {
                     charge = chargeMax;
@@ -146,21 +136,13 @@ public class PlayerBasics : MonoBehaviour{
                 body.velocity += new Vector2(-strafeAmount, 0);
             }
             if (moteActive == true) {
-                body.AddForce(new Vector2(moteY, 0));
+                body.AddForce(new Vector2(moteY*moteStrafe, 0));
             }
             if (rightJump) {
                 body.velocity += new Vector2(strafeAmount, 0);
             }
         }
     }
-
-    void ResetJump(){
-        jumpPower = temp;
-        charge = 0;
-        jumping = false;
-        chargeBar.value = 0;
-    }
-
 
     //interaction button detection
     public void Interact(InputAction.CallbackContext callback){
@@ -181,33 +163,14 @@ public class PlayerBasics : MonoBehaviour{
 
 
     //jumping
-    //keyboard
-    public void Jump(InputAction.CallbackContext callback)
+    public void KeyBoardJump(InputAction.CallbackContext callback)
     {
         if (callback.started) { jumping = true; }
-        if (callback.canceled)
-        {
-            GetComponent<Animator>().SetTrigger("Jump");
-            temp = jumpPower;
-            jumpPower *= charge;
-            if (GetComponent<Rigidbody2D>().velocity.magnitude == 0) {
-                if (rightJump == true) {
-                    // Edited by Ethan i have changed it so the player rotates aswell as the transform position too. 
-                    body.velocity = new Vector2(jumpPower / 2, jumpPower);
-                    gameObject.transform.localScale = new Vector3(1, 1, 1);
-                }
-                else if (leftJump == true) {
-                    body.velocity = new Vector2(-(jumpPower / 2), jumpPower);
-                    gameObject.transform.localScale = new Vector3(-1, 1, 1);
-                }
-                else {
-                    body.velocity = new Vector2(0, jumpPower);
-                }
-            }
-            ResetJump();
+        if (callback.canceled) {
+            Jump();
         }
     }
-    //wimote
+
     public void Jump() {
         GetComponent<Animator>().SetTrigger("Jump");
         temp = jumpPower;
@@ -215,11 +178,11 @@ public class PlayerBasics : MonoBehaviour{
         if (GetComponent<Rigidbody2D>().velocity.magnitude == 0) {
             // Edited by Ethan i have added a scale flip so when the player jumps left the player will also look left too
             // also reverts back when looking left. 
-            if (rightJump == true) {
+            if (moteY > deadZone/2 || rightJump) {
                 body.velocity = new Vector2(jumpPower / 2, jumpPower);
                 gameObject.transform.localScale = new Vector3(1, 1, 1);
             }
-            else if (leftJump == true) {
+            else if (moteY < -(deadZone / 2) || leftJump) {
                 body.velocity = new Vector2(-(jumpPower / 2), jumpPower);
                 gameObject.transform.localScale = new Vector3(-1, 1, 1);
             }
@@ -229,11 +192,16 @@ public class PlayerBasics : MonoBehaviour{
         }
         ResetJump();
     }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
+    void ResetJump(){
+        jumpPower = temp;
+        charge = 0;
+        jumping = false;
+        chargeBar.value = 0;
+    }
+    private void OnCollisionEnter2D(Collision2D collision){
         if (collision.gameObject.CompareTag("wall"))
         {
-            if (interacting)
+            if (interacting || moteX > 0.2f)
             {
                 GetComponent<Animator>().Play("Blorpo_Grab");
                 body.velocity = new Vector2(0, 0);
@@ -241,8 +209,7 @@ public class PlayerBasics : MonoBehaviour{
             }
         }
     }
-    private void OnCollisionExit2D(Collision2D collision)
-    {
+    private void OnCollisionExit2D(Collision2D collision){
         if (collision.gameObject.CompareTag("wall"))
         {
             Physics2D.gravity = startGravity;
@@ -250,14 +217,11 @@ public class PlayerBasics : MonoBehaviour{
         }
     }
 
-    public void valChange()
-    {
-        if (chargeBar.value == 1)
-        {
+    public void valChange(){
+        if (chargeBar.value == 1){
             chargeBar.gameObject.SetActive(false);
         }
-        else
-        {
+        else{
             chargeBar.gameObject.SetActive(true);
         }
     }
