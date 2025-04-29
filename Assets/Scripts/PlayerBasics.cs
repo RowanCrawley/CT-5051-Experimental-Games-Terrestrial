@@ -1,13 +1,11 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using WiimoteApi;
 
-
-
-
 //Created by Rowan
-//Player movement and basic interactions with platforms
+//Player movement
 public class PlayerBasics : MonoBehaviour{
     //generic vars for jumping
     float temp, moteX, moteY;
@@ -20,9 +18,9 @@ public class PlayerBasics : MonoBehaviour{
     public int currZoom = 10, chargeSpd = 5;
     public Slider chargeBar;
     public Wiimote mote;
+    bool minus, plus, home, one, dLeft,dRight,dUp,dDown = false;
+    Detection Detection = new();
 
-    float timer = 0;
-    public bool plusButtonPressed, DLeftButtonPressed, DRightButtonPressed, DUpButtonPressed, DDownButtonPressed = false;
 
     private void Awake(){
         chargeBar = GameObject.Find("ChargeBar").GetComponent<Slider>();
@@ -46,28 +44,8 @@ public class PlayerBasics : MonoBehaviour{
         }
     }
 
-   void OnButtonDown( bool buttonPresssed) {
-        if (buttonPresssed) {
-            timer += Time.deltaTime;
-            if (timer < 0.0035f) {
-                buttonPresssed = true;
-            }
-            else {
-                buttonPresssed = false;
-            }
-        }
-
-        else {
-            timer = 0;
-            buttonPresssed = false;
-            
-        }
-   }
-
     void Update() {
-        if (mote.Button.home) {
-            mote.Accel.CalibrateAccel(AccelCalibrationStep.LEFT_SIDE_UP);
-        }
+        
         if (body.velocity.y < 0) {
             GetComponent<Animator>().SetTrigger("Fall");
         }
@@ -79,13 +57,40 @@ public class PlayerBasics : MonoBehaviour{
             moteActive = true;
         }
         if (moteActive == true) {
-
             //checks for wiimote button presses
-            OnButtonDown(plusButtonPressed);
-            OnButtonDown(DLeftButtonPressed);
-            OnButtonDown(DRightButtonPressed);
-            OnButtonDown(DUpButtonPressed);
-            OnButtonDown(DDownButtonPressed);
+
+            plus = mote.Button.plus;
+            minus = mote.Button.minus;
+            home = mote.Button.home;
+            dLeft = mote.Button.d_left;
+            dRight = mote.Button.d_right;
+            dDown = mote.Button.d_down;
+            dUp = mote.Button.d_up;
+            
+            if (Detection.Get("one", one)) {
+                mote.Accel.CalibrateAccel(AccelCalibrationStep.LEFT_SIDE_UP);
+            }
+
+            if (Detection.Get("plus", plus)) {
+                Debug.Log("plus pressed this frame");
+            }
+
+            if (Detection.Get("minus", minus)) {
+                Debug.Log("minus pressed this frame");
+            }
+
+            if (Detection.Get("dLeft", dLeft)) {
+                Debug.Log("dLeft");
+            }
+            if (Detection.Get("dRight", dRight)) {
+                Debug.Log("dRight");
+            }
+            if (Detection.Get("dUp", dUp)) {
+                Debug.Log("dUp");
+            }
+            if (Detection.Get("dDown", dDown)) {
+                Debug.Log("dDown");
+            }
 
             //--------------------------------------------
             moteX = mote.Accel.GetCalibratedAccelData()[0] - 0.2f;

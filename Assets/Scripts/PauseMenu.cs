@@ -8,15 +8,21 @@ public class PauseMenu : MonoBehaviour
     public GameObject OptionsCanvas;
     bool Paused = false; // Setting variables i had to add both canvases as i had an issue with one not toggeling off.
 
+    bool home = false;
+    Detection Detection = new();
+    PlayerBasics Script;
+
     public void Start() {
         PauseCanvas.SetActive(false);
         OptionsCanvas.SetActive(false);
+        Script = GameObject.Find("Player").GetComponent<PlayerBasics>();
         // Sets both to off when  the game starts. 
     }
 
 
     private void LateUpdate() {//Changed to late update so that playerbasics update happen first
-        if (Input.GetKeyDown(KeyCode.Escape) || GetComponent<PlayerBasics>().plusButtonPressed) {
+        home = Script.mote.Button.home;
+        if (Input.GetKeyDown(KeyCode.Escape) || Detection.Get("home",home)) {
             if (Paused == true) {
                 PauseCanvas.SetActive(false);
                 Time.timeScale = 1.0f;

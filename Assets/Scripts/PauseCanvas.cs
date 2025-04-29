@@ -4,6 +4,7 @@ using WiimoteApi;
 public class PauseCanvas : MonoBehaviour
 {
     // created by Ethan
+    //wiimote stuff added by Rowan
     public GameObject Canvas;
     bool paused = true;
     Wiimote mote;
