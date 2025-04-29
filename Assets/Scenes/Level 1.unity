@@ -258,6 +258,10 @@ PrefabInstance:
       propertyPath: strafeAmount
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3678299081579676115, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
+      propertyPath: moteStrafeModifier
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 4692643705571242559, guid: 8c38dbcdbeb1ad04e949df1775395ea8, type: 3}
       propertyPath: PauseCanvas
       value: 

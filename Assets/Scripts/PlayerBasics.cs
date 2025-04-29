@@ -9,7 +9,7 @@ using WiimoteApi;
 public class PlayerBasics : MonoBehaviour{
     //generic vars for jumping
     float temp, moteX, moteY;
-    public float charge, jumpPower, chargeMax, strafeAmount, moteStrafe, deadZone;
+    public float charge, jumpPower, chargeMax, strafeAmount, deadZone;
     public Vector2 gravity;
     public bool interacting, rightJump, leftJump, moteActive;
     public bool jumping = false;
@@ -94,8 +94,19 @@ public class PlayerBasics : MonoBehaviour{
             //Finds the mote position
             moteX = mote.Accel.GetCalibratedAccelData()[0] + 0.1f;
             moteY = -mote.Accel.GetCalibratedAccelData()[1] + 0.85f;
-            Debug.Log(moteY);
 
+            if(moteY > deadZone / 2) {
+                rightJump = true;
+            }
+            else {
+                rightJump = false;
+            }
+            if (moteY < -(deadZone / 2)) {
+                leftJump = true;
+            } 
+            else { 
+                leftJump = false;
+            }
             //--------------------------------------------
             //for however long the button is pressed, add charge. when it is released - jump
             if (mote.Button.a) {
@@ -129,6 +140,8 @@ public class PlayerBasics : MonoBehaviour{
         }
 
 
+
+
         // Edited by Ethan i had to change how the player is moved using velocity
         // instead of add force i changed to velocity to make trajectory line easier on Right / Left jump.
         if (body.velocity.y > 0) {
@@ -136,7 +149,7 @@ public class PlayerBasics : MonoBehaviour{
                 body.velocity += new Vector2(-strafeAmount, 0);
             }
             if (moteActive == true) {
-                body.AddForce(new Vector2(moteY*moteStrafe, 0));
+                body.velocity += new Vector2(moteY*strafeAmount*5, 0);
             }
             if (rightJump) {
                 body.velocity += new Vector2(strafeAmount, 0);
@@ -178,11 +191,11 @@ public class PlayerBasics : MonoBehaviour{
         if (GetComponent<Rigidbody2D>().velocity.magnitude == 0) {
             // Edited by Ethan i have added a scale flip so when the player jumps left the player will also look left too
             // also reverts back when looking left. 
-            if (moteY > deadZone/2 || rightJump) {
+            if (rightJump) {
                 body.velocity = new Vector2(jumpPower / 2, jumpPower);
                 gameObject.transform.localScale = new Vector3(1, 1, 1);
             }
-            else if (moteY < -(deadZone / 2) || leftJump) {
+            else if (leftJump) {
                 body.velocity = new Vector2(-(jumpPower / 2), jumpPower);
                 gameObject.transform.localScale = new Vector3(-1, 1, 1);
             }
