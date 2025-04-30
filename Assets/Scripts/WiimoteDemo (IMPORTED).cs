@@ -1,10 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using System.Collections;
-using System.Text;
-using System;
 using WiimoteApi;
-
+//this entire script was imported and has not been edited at all
+//repo of origin: https://github.com/Flafla2/Unity-Wiimote
 public class WiimoteDemo : MonoBehaviour {
 
     public WiimoteModel model;

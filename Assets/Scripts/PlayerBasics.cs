@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -7,9 +6,8 @@ using WiimoteApi;
 //Created by Rowan
 //Player movement
 public class PlayerBasics : MonoBehaviour{
-    //generic vars for jumping
     float temp, moteX, moteY;
-    public float charge, jumpPower, chargeMax, strafeAmount, deadZone;
+    public float charge, jumpPower, chargeMax, strafeAmount, WiiStrafeModifier, deadZone;
     public Vector2 gravity;
     public bool interacting, rightJump, leftJump, moteActive;
     public bool jumping = false;
@@ -18,7 +16,7 @@ public class PlayerBasics : MonoBehaviour{
     public int currZoom = 10, chargeSpd = 5;
     public Slider chargeBar;
     public Wiimote mote;
-    bool one = false;
+    bool one, wasHeld = false;
     Detection Detection = new();
 
 
@@ -51,7 +49,7 @@ public class PlayerBasics : MonoBehaviour{
         else if (body.velocity.y == 0) {
             GetComponent<Animator>().SetTrigger("Idle");
         }
-        //activates mote for play if home button is pressed
+        //activates mote for play if home button is pressed - without this the controls become bugged because they try to work at the same time
         if (mote != null && mote.Button.home) {
             moteActive = true;
         }
@@ -64,7 +62,7 @@ public class PlayerBasics : MonoBehaviour{
             }
 
             //--------------------------------------------
-            //Finds the mote position
+            //Finds the mote position and sets horizontal jumping
             moteX = mote.Accel.GetCalibratedAccelData()[0] + 0.1f;
             moteY = -mote.Accel.GetCalibratedAccelData()[1] + 0.85f;
 
@@ -86,7 +84,7 @@ public class PlayerBasics : MonoBehaviour{
                 if (charge > chargeMax) {
                     charge = chargeMax;
                     chargeBar.value = chargeMax;
-                    jumping = false;
+                    jumping = false;//traj line is based off this var
 
 
                 }
@@ -96,9 +94,13 @@ public class PlayerBasics : MonoBehaviour{
                     jumping = true;
                 }
             }
-            else {
+            //OnButtonReleased stuff - this was only needed in this instance and so was not put into a function like OnButtonDown
+            bool isHeld = mote.Button.a;
+
+            if (wasHeld && !isHeld) {
                 Jump();
             }
+            wasHeld = isHeld;
         }
 
         if (jumping) {
@@ -113,7 +115,7 @@ public class PlayerBasics : MonoBehaviour{
         }
 
 
-
+        //strafing
 
         // Edited by Ethan i had to change how the player is moved using velocity
         // instead of add force i changed to velocity to make trajectory line easier on Right / Left jump.
@@ -122,7 +124,7 @@ public class PlayerBasics : MonoBehaviour{
                 body.velocity += new Vector2(-strafeAmount, 0);
             }
             if (moteActive == true) {
-                body.velocity += new Vector2(moteY*strafeAmount*5, 0);
+                body.velocity += new Vector2(moteY*strafeAmount*WiiStrafeModifier, 0);
             }
             if (rightJump) {
                 body.velocity += new Vector2(strafeAmount, 0);
@@ -152,9 +154,7 @@ public class PlayerBasics : MonoBehaviour{
     public void KeyBoardJump(InputAction.CallbackContext callback)
     {
         if (callback.started) { jumping = true; }
-        if (callback.canceled) {
-            Jump();
-        }
+        if (callback.canceled) { Jump(); }
     }
 
     public void Jump() {
@@ -176,19 +176,16 @@ public class PlayerBasics : MonoBehaviour{
                 body.velocity = new Vector2(0, jumpPower);
             }
         }
-        ResetJump();
-    }
-    void ResetJump(){
         jumpPower = temp;
         charge = 0;
         jumping = false;
         chargeBar.value = 0;
     }
+
+    //wall collisions for wall climbing
     private void OnCollisionEnter2D(Collision2D collision){
-        if (collision.gameObject.CompareTag("wall"))
-        {
-            if (interacting || moteX > 0.2f)
-            {
+        if (collision.gameObject.CompareTag("wall")){
+            if (interacting || moteX > 0.2f){
                 GetComponent<Animator>().Play("Blorpo_Grab");
                 body.velocity = new Vector2(0, 0);
                 Physics2D.gravity = new Vector2(0, 0);
@@ -196,13 +193,13 @@ public class PlayerBasics : MonoBehaviour{
         }
     }
     private void OnCollisionExit2D(Collision2D collision){
-        if (collision.gameObject.CompareTag("wall"))
-        {
+        if (collision.gameObject.CompareTag("wall")){
             Physics2D.gravity = startGravity;
             GetComponent<Animator>().SetTrigger("StopGrabbing");
         }
     }
 
+    //charging
     public void valChange(){
         if (chargeBar.value == 1){
             chargeBar.gameObject.SetActive(false);

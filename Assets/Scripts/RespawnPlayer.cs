@@ -30,5 +30,6 @@ public class RespawnPlayer : MonoBehaviour
         }
         
     }
-    // simply respawns the player by gettiong the scene they are in and respawnign them at the start of the scene. 
+    //wiimote stuff added by Rowan
+    // Ethan - simply respawns the player by gettiong the scene they are in and respawnign them at the start of the scene. 
 }

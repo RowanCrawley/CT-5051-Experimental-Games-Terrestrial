@@ -1,12 +1,12 @@
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using WiimoteApi;
 
+//Made by Rowan
+//Wiimote navigation for the options menu
 public class GameNav : MonoBehaviour {
     Detection Detection = new();
     EventSystem EventSystem;
@@ -17,7 +17,7 @@ public class GameNav : MonoBehaviour {
     public Canvas mCanvas, oCanvas;
     public GameObject volume,Brightness, Fullscreen,Dropdown;
 
-    bool dLeft,dRight,dUp,dDown,a,one,two,plus,minus = false;
+    bool dLeft,dRight,dUp,dDown,one,two,plus,minus = false;
 
     void Start(){
         EventSystem = EventSystem.current;
@@ -31,15 +31,13 @@ public class GameNav : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update(){
         
         if (mote != null) {
             dLeft = mote.Button.d_left;
             dRight = mote.Button.d_right;
             dDown = mote.Button.d_down;
             dUp = mote.Button.d_up;
-            a = mote.Button.a;
             one = mote.Button.one;
             two = mote.Button.two;
             minus = mote.Button.minus;

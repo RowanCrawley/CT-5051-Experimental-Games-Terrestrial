@@ -1,11 +1,10 @@
-using System.Linq;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using WiimoteApi;
-
+//Made by Rowan
+//Wiimote navigation for the main menu
 public class MenuNav : MonoBehaviour {
     Detection Detection = new();
     EventSystem EventSystem;
@@ -19,6 +18,7 @@ public class MenuNav : MonoBehaviour {
     bool dLeft,dRight,dUp,dDown,a,one,two,plus,minus = false;
 
     void Start(){
+        //uses the Event System to select the different elements
         EventSystem = EventSystem.current;
         resolutions = GetComponent<MainMenu>().resolutions;
         resolutionIndex = resolutions.Length-1;
@@ -36,6 +36,7 @@ public class MenuNav : MonoBehaviour {
     {
         
         if (mote != null) {
+            //define buttons for button down presses
             dLeft = mote.Button.d_left;
             dRight = mote.Button.d_right;
             dDown = mote.Button.d_down;
@@ -46,7 +47,7 @@ public class MenuNav : MonoBehaviour {
             minus = mote.Button.minus;
             plus = mote.Button.plus;
 
-
+            //if main canvas is enabled, change what buttons do
             if(mCanvas.enabled == true) {
 
                 if (Detection.Get("a", a)) {
@@ -61,7 +62,7 @@ public class MenuNav : MonoBehaviour {
                 }
             }
 
-
+            //if options canvas is enabled, change what buttons do
             if (oCanvas.enabled == true) {
                 if (EventSystem.currentSelectedGameObject == null) {
                     EventSystem.SetSelectedGameObject(volume);
@@ -87,9 +88,6 @@ public class MenuNav : MonoBehaviour {
                         PlayerPrefs.SetFloat("Brightness", (101 - Brightness.GetComponent<Slider>().value) / 100);
                     }
                 }
-
-                
-
                 if (Detection.Get("minus", minus)) {
                     mCanvas.enabled = true;
                     oCanvas.enabled = false;
@@ -99,6 +97,8 @@ public class MenuNav : MonoBehaviour {
                     Fullscreen.GetComponent<Toggle>().isOn = !Fullscreen.GetComponent<Toggle>().isOn;
                 }
                 
+                //drop down menu stuff
+                //for if not expanded:
                 if (!GetComponent<MainMenu>().resolutionDropdown.IsExpanded) { 
                     if (Detection.Get("dUp", dUp)) {
                         EventSystem.SetSelectedGameObject(volume);
@@ -110,6 +110,7 @@ public class MenuNav : MonoBehaviour {
                         GetComponent<MainMenu>().resolutionDropdown.Show();
                     }
                 }
+                //if expanded:
                 else if (GetComponent<MainMenu>().resolutionDropdown.IsExpanded) {
                     if (Detection.Get("dUp", dUp)) {
                         if (resolutionIndex != 0) {
@@ -129,6 +130,7 @@ public class MenuNav : MonoBehaviour {
                             Dropdown.transform.GetChild(0).GetComponent<TextMeshProUGUI>().text = resolution.ToString();
                         }
                     }
+                    //hides the drop down menu
                     if (Detection.Get("one", one)) {
                         GetComponent<MainMenu>().resolutionDropdown.Hide();
                     }
