@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-
+// created by Ethan
 public class TrajectoryLine : MonoBehaviour
 {
     [SerializeField] GameObject gameobject;
