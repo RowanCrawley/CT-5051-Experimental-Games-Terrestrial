@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class MainMenu : MonoBehaviour
 {
     public TMP_Dropdown resolutionDropdown;
-    Resolution[] resolutions;
+    public Resolution[] resolutions;
 
     private void Start() {
         resolutions = Screen.resolutions;
