@@ -18,7 +18,7 @@ public class PlayerBasics : MonoBehaviour{
     public int currZoom = 10, chargeSpd = 5;
     public Slider chargeBar;
     public Wiimote mote;
-    bool minus, plus, one, dLeft,dRight,dUp,dDown = false;
+    bool one = false;
     Detection Detection = new();
 
 
@@ -58,36 +58,9 @@ public class PlayerBasics : MonoBehaviour{
         if (moteActive == true) {
             //checks for wiimote button presses
 
-            plus = mote.Button.plus;
-            minus = mote.Button.minus;
-            dLeft = mote.Button.d_left;
-            dRight = mote.Button.d_right;
-            dDown = mote.Button.d_down;
-            dUp = mote.Button.d_up;
             
             if (Detection.Get("one", one)) {
                 mote.Accel.CalibrateAccel(AccelCalibrationStep.LEFT_SIDE_UP);
-            }
-
-            if (Detection.Get("plus", plus)) {
-                Debug.Log("plus pressed this frame");
-            }
-
-            if (Detection.Get("minus", minus)) {
-                Debug.Log("minus pressed this frame");
-            }
-
-            if (Detection.Get("dLeft", dLeft)) {
-                Debug.Log("dLeft");
-            }
-            if (Detection.Get("dRight", dRight)) {
-                Debug.Log("dRight");
-            }
-            if (Detection.Get("dUp", dUp)) {
-                Debug.Log("dUp");
-            }
-            if (Detection.Get("dDown", dDown)) {
-                Debug.Log("dDown");
             }
 
             //--------------------------------------------

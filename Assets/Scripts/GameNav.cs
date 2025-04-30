@@ -3,10 +3,11 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using WiimoteApi;
 
-public class MenuNav : MonoBehaviour {
+public class GameNav : MonoBehaviour {
     Detection Detection = new();
     EventSystem EventSystem;
     Wiimote mote;
@@ -20,9 +21,7 @@ public class MenuNav : MonoBehaviour {
 
     void Start(){
         EventSystem = EventSystem.current;
-        resolutions = GetComponent<MainMenu>().resolutions;
-        resolutionIndex = resolutions.Length-1;
-        resolution = resolutions[resolutionIndex];
+        
         WiimoteManager.FindWiimotes();
         if (WiimoteManager.Wiimotes != null) {
             if (WiimoteManager.Wiimotes.Count != 0) {
@@ -49,15 +48,12 @@ public class MenuNav : MonoBehaviour {
 
             if(mCanvas.enabled == true) {
 
-                if (Detection.Get("a", a)) {
-                    GetComponent<MainMenu>().PlayGame();
-                }
                 if (Detection.Get("one", one)) {
                     mCanvas.enabled = false;
                     oCanvas.enabled = true;
                 }
                 if (Detection.Get("two", two)) {
-                    GetComponent<MainMenu>().QuitGame();
+                    SceneManager.LoadScene(0);
                 }
             }
 
@@ -108,6 +104,9 @@ public class MenuNav : MonoBehaviour {
                     }
                     if (Detection.Get("one", one)) {
                         GetComponent<MainMenu>().resolutionDropdown.Show();
+                        resolutions = GetComponent<MainMenu>().resolutions;
+                        resolutionIndex = resolutions.Length - 1;
+                        resolution = resolutions[resolutionIndex];
                     }
                 }
                 else if (GetComponent<MainMenu>().resolutionDropdown.IsExpanded) {

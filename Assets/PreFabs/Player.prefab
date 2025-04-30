@@ -489,13 +489,12 @@ MonoBehaviour:
   jumpPower: 2.1
   chargeMax: 12
   strafeAmount: 0.05
-  moteStrafe: 0
   deadZone: 0
+  WiiStrafeModifier: 0
   gravity: {x: 0, y: -50}
   interacting: 0
   rightJump: 0
   leftJump: 0
-  moteActive: 0
   jumping: 0
   currZoom: 2
   chargeSpd: 12
@@ -577,7 +576,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 3678299081579676115}
         m_TargetAssemblyTypeName: PlayerBasics, Assembly-CSharp
-        m_MethodName: Jump
+        m_MethodName: KeyBoardJump
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

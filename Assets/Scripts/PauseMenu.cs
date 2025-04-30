@@ -13,10 +13,7 @@ public class PauseMenu : MonoBehaviour
     PlayerBasics Script;
 
     public void Start() {
-        PauseCanvas.SetActive(false);
-        OptionsCanvas.SetActive(false);
         Script = GameObject.Find("Player").GetComponent<PlayerBasics>();
-        // Sets both to off when  the game starts. 
     }
 
 
@@ -27,14 +24,14 @@ public class PauseMenu : MonoBehaviour
        
         if (Input.GetKeyDown(KeyCode.Escape) || Detection.Get("home",home)) {
             if (Paused == true) {
-                PauseCanvas.SetActive(false);
+                PauseCanvas.GetComponent<Canvas>().enabled = false;
                 Time.timeScale = 1.0f;
                 Paused = false;
 
-                OptionsCanvas.SetActive(false);
+                OptionsCanvas.GetComponent<Canvas>().enabled = false;
             }
             else {
-                PauseCanvas.SetActive(true);
+                PauseCanvas.GetComponent<Canvas>().enabled = true;
                 Time.timeScale = 0.0f;
                 Paused = true;
             }
@@ -43,10 +40,10 @@ public class PauseMenu : MonoBehaviour
     }
     public void Resume() {
         if (Paused == true) {
-            PauseCanvas.SetActive(false);
+            PauseCanvas.GetComponent<Canvas>().enabled = false;
             Time.timeScale = 1.0f;
 
-            OptionsCanvas.SetActive(false); 
+            OptionsCanvas.GetComponent<Canvas>().enabled = false;
         }
         // Sets scale back to normal and hides canvas. 
     }
