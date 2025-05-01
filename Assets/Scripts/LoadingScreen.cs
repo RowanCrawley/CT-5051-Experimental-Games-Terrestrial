@@ -26,7 +26,7 @@ public class LoadingScreen : MonoBehaviour
 
         if (timeElapsed > SecondsToWait) {
             ResetScene();
-            SceneManager.LoadScene(4);
+            SceneManager.LoadScene(3);
         }
         if (slider.value < targetProgress) {
             slider.value += SpeedProgress * Time.deltaTime;

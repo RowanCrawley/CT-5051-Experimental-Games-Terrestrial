@@ -32,7 +32,7 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = 0;
         }
         if (currentHealth == 0) {
-            SceneManager.LoadSceneAsync(3);
+            SceneManager.LoadSceneAsync(2);
         }
         healthHeart.fillAmount = currentHealth / maxHealth;
         // damage control function so this will determine how much health to take from the player and when the players health reaches 0 to enter respawn scene. 
