@@ -25,7 +25,7 @@ public class RespawnPlayer : MonoBehaviour
         if (mote != null) {
             a = mote.Button.a;
             if (Detection.Get("a", a)) {
-                SceneManager.LoadSceneAsync(4);
+                SceneManager.LoadSceneAsync(3);
             }
         }
         
